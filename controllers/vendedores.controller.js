@@ -1,10 +1,10 @@
-import CompradoresService from "../services/comprador.service.js";
+import VendedorServices from "../services/vendedor.service.js";
 
 
-const obtenercompradoresID = async (req,res)=>{
+const obtenervendedorID = async (req,res)=>{
     try {
         const {id} = req.params.id;
-        const comprador = await CompradoresService.obtenercompradorID(id);
+        const comprador = await VendedorServices.obtenervendedorID(id);
         if (!comprador) return res.status(404).send("No se encontro comprador");
 
         res.json({comprador: comprador})
@@ -45,5 +45,3 @@ const CompradoresController = {
     updateComprador,
     deletecomprador
 }
-
-export default CompradoresController;

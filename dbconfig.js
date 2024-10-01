@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 const {Client} = pg;
 
-export const client = new Client ({
+export const config = new Client ({
     "password" : process.env.DB_PASSWORD,
     "user" : process.env.DB_USER,
     "host" : process.env.DB_HOST,
@@ -12,4 +12,4 @@ export const client = new Client ({
     "ssl" : "true"
 });
 
-export default client;
+export default config;
