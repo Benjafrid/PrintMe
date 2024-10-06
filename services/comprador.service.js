@@ -8,7 +8,7 @@ const getCompradorByEmail = async (mail) => {
 
     try {
         const { rows } = await Client.query(
-            "SELECT * FROM usuarios WHERE mail = $4",
+            "SELECT * FROM usuarios WHERE mail = $1",
             [mail]
         );
         if (rows.length < 1) return null;

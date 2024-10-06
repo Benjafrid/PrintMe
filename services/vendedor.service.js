@@ -20,7 +20,7 @@ const getVendedoresByEmail = async (mail) => {
         throw error;
     }
 };
-import Client from "../dbconfig.js"
+
 
 const getvendedor = async (_, res) => {
     try {
@@ -43,14 +43,21 @@ if (vendedor.rows.lenght > 0){
 }
 };
 
-const updatevendedor = async (req, res) => {
-
-    const { nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña } = req.body
+const updatevendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña ) => {
 
    const result= await Client.query("UPDATE vendedor SET nombre = $2, apellido = $3, mail = $4, zona = $5, impresora_modelo = $6, impresora_materiales = $7, post_procesado = $8, contraseña = $9 WHERE id = $1 RETURNING*", [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
     if (result.rows.length > 0) {
         return result;
     } else {
+        return null;
+    }
+};
+const createvendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) => {
+
+    const createvend = await Client.query("INSERT INTO vendedor (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$9) RETURNING*", [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
+    if (createvend.rows.lenght > 0){
+      return createvend;
+    } else{
         return null;
     }
 };
@@ -65,12 +72,13 @@ const deletevendedor = async (req, res) => {
     }
 };
 
-const VendedorServices = {
+const vendedorServices = {
     getvendedor,
     obtenervendedorID,
     updatevendedor,
     deletevendedor,
     getVendedoresByEmail,
+    createvendedor
 };
 
-export default VendedorServices;
+export default vendedorServices;

@@ -3,10 +3,8 @@ import CompradoresController from '../controllers/compradores.controller.js';
 
 const router = Router();
 
-router.get("/CompradorEmail/:email", CompradoresController.getCompradorByEmail)
-router.get("/compradorByID")
-router.post("/createcomprador")
-router.put("/updatecomprador")
-router.delete("/deletecomprador")
+router.get("/compradorByID", CompradoresController.obtenercompradoresID);
+router.put("/updatecomprador",CompradoresController.updateComprador);
+router.delete("/deletecomprador",CompradoresController.deletecomprador);
 
 export default router;

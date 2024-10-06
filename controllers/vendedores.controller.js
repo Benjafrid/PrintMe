@@ -13,12 +13,12 @@ const obtenervendedorID = async (req,res)=>{
     }
 };
 
-const updateComprador = async (req, res) => {
+const updatevendedor = async (req, res) => {
     try {
-        const {nombre, apellido, mail, contraseña, id} = req.body;
-        const update = await CompradoresService.updatecomprador(nombre, apellido, mail, contraseña, id)
+        const {nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id} = req.body;
+        const update = await VendedorServices.updatecomprador(nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id)
 
-        if (!update) return res.status(400).json({message: "non se pudo actualizar"});
+        if (!update) return res.status(400).json({message: "no se pudo actualizar"});
 
         res.json({updated: update});
 
@@ -26,22 +26,23 @@ const updateComprador = async (req, res) => {
         res.status(500).json({message: error.message})
     }
 }
-const deletecomprador = async (req, res) => {
+const deletevendedor = async (req, res) => {
     try {
         const {id} = req.body;
-        const deletecom = await CompradoresService.deletecomprador(id)
+        const deletevend = await VendedorServices.deletecomprador({id})
 
-        if (!deletecom) return res.status(400).json({message: "non se pudo actualizar"});
+        if (!deletevend) return res.status(400).json({message: "no se pudo actualizar"});
 
-        res.json({deleted: deletecom});
+        res.json({deleted: deletevend});
 
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 }
 
-const CompradoresController = {
-    obtenercompradoresID,
-    updateComprador,
-    deletecomprador
+const VendedorController = {
+    obtenervendedorID,
+    updatevendedor,
+    deletevendedor
 }
+export default VendedorController;

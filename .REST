@@ -1,5 +1,29 @@
-GET "http://localhost:3000/compradores/CompradorEmail/pablomiguez1@gmail.com" HTTP/1.1
-
 ###
+//COMPRADOR
+GET "http://localhost:3000/compradorByID" HTTP/1.1
 
+##
+DELETE  "http://localhost:3000/deletecomprador" HTTP/1.1
 
+##
+PUT "http://localhost:3000/updatecomprador" HTTP/1.1
+
+##
+//VENDEDOR
+GET "http://localhost:3000/vendedorID" HTTP/1.1
+
+##
+DELETE  "http://localhost:3000/deletevendedor" HTTP/1.1
+
+##
+//LOGIN
+
+GET "http://localhost:3000/login" HTTP/1.1
+
+##
+//REGISTER COMPRADOR
+DELETE  "http://localhost:3000/registercomp" HTTP/1.1
+
+##
+//REGISTER VENDEDOR
+PUT "http://localhost:3000/registervend" HTTP/1.1

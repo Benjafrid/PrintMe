@@ -1,12 +1,10 @@
 import {Router} from 'express';
-import VendedoresController from '../controllers/vendedores.controller.js';
+import VendedorController from '../controllers/vendedores.controller.js';
 
 const router = Router();
 
-router.get("/VendedorEmail/:email", VendedoresController.getVendedoresByEmail)
-router.get("/vendedorByID")
-router.post("/createvendedor")
-router.put("/updatevendedor")
-router.delete("/deletevendedor")
+router.get("/vendedorByID",VendedorController.obtenervendedorID)
+router.put("/updatevendedor",VendedorController.updatevendedor)
+router.delete("/deletevendedor",VendedorController.deletevendedor)
 
 export default router;
