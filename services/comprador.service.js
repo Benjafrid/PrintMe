@@ -7,7 +7,7 @@ const getCompradorByEmail = async (mail) => {
     await client.connect();
 
     try {
-        const { rows } = await Client.query(
+        const { rows } = await client.query(
             "SELECT * FROM usuarios WHERE mail = $1",
             [mail]
         );
@@ -22,8 +22,10 @@ const getCompradorByEmail = async (mail) => {
 };
 
 const getAllcompradores = async (_, res) => {
+    const client = new Client(config);
+    await client.connect();
     try {
-        const {rows, _} = await Client.query("SELECT * FROM comprador")
+        const {rows, _} = await client.query("SELECT * FROM comprador")
 
         res.status(200).json({compradores: rows, message: 'Obtenidos con exito'})
     } catch (error) {
@@ -32,8 +34,9 @@ const getAllcompradores = async (_, res) => {
     }
 }
 const obtenercompradorID = async (id) => {
-    
-    const usuario = await Client.query("SELECT * FROM comprador WHERE id = $1", [id])
+    const client = new Client(config);
+    await client.connect();
+    const usuario = await client.query("SELECT * FROM comprador WHERE id = $1", [id])
 if (usuario.rows.lenght > 0){
   return usuario;
 } else{
@@ -42,8 +45,9 @@ if (usuario.rows.lenght > 0){
 }
 
 const createcomprador = async (nombre, apellido, mail, contraseña) => {
-
-    const createusu = await Client.query("INSERT INTO comprador (nombre, apellido, mail, contraseña) VALUES ($1, $2, $3, $4) RETURNING*", [nombre, apellido, mail, contraseña]);
+    const client = new Client(config);
+    await client.connect();
+    const createusu = await client.query("INSERT INTO comprador (nombre, apellido, mail, contraseña) VALUES ($1, $2, $3, $4) RETURNING*", [nombre, apellido, mail, contraseña]);
     if (createusu.rows.lenght > 0){
       return createusu;
     } else{
@@ -52,8 +56,9 @@ const createcomprador = async (nombre, apellido, mail, contraseña) => {
 };
 
 const updatecomprador = async (nombre, apellido, mail, contraseña, id) => {
-
-    const result = await Client.query("UPDATE comprador SET nombre = $2, apellido = $5, mail = $4, contraseña = $3 WHERE id = $1 RETURNING*", [nombre, id, mail, contraseña, apellido]);
+    const client = new Client(config);
+    await client.connect();
+    const result = await client.query("UPDATE comprador SET nombre = $2, apellido = $5, mail = $4, contraseña = $3 WHERE id = $1 RETURNING*", [nombre, id, mail, contraseña, apellido]);
     if (result.rows.length > 0) {
         return result;
     } else {
@@ -62,7 +67,9 @@ const updatecomprador = async (nombre, apellido, mail, contraseña, id) => {
 };
 
 const deletecomprador = async (id) => {
-    const result = await Client.query("DELETE FROM vendedor WHERE id = $1 RETURNING* ", [id]);
+    const client = new Client(config);
+    await client.connect();
+    const result = await client.query("DELETE FROM vendedor WHERE id = $1 RETURNING* ", [id]);
     if (result.rows.lenght > 0) {
         res.status(200).send('vendedor eliminado con exito: ${JSON.stringify(result.rows[0])}');
     } else {

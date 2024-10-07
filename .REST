@@ -1,29 +1,70 @@
 ###
 //COMPRADOR
-GET "http://localhost:3000/compradorByID" HTTP/1.1
+GET "http://localhost:3000/compradores/compradorByID/1" HTTP/1.1
 
-##
-DELETE  "http://localhost:3000/deletecomprador" HTTP/1.1
+###
+DELETE  "http://localhost:3000/compradores/deletecomprador" HTTP/1.1
+Content-Type: application/application/json
 
-##
-PUT "http://localhost:3000/updatecomprador" HTTP/1.1
+###
+PUT "http://localhost:3000/compradores/updatecomprador" HTTP/1.1
+Content-Type: application/json
 
-##
+{
+"apellido": "juan", "email":"juanestebez@gmail.com"
+}
+
+
+###
 //VENDEDOR
-GET "http://localhost:3000/vendedorID" HTTP/1.1
+GET "http://localhost:3000/vendedor/vendedorID/1" HTTP/1.1
 
-##
-DELETE  "http://localhost:3000/deletevendedor" HTTP/1.1
+###
+DELETE  "http://localhost:3000/vendedor/deletevendedor" HTTP/1.1
 
-##
+###
+PUT "http://localhost:3000/vendedor/updatecomprador" HTTP/1.1
+Content-Type: application/json
+
+{
+"apellido": "agradnik", "email":"juanagradnik@gmail.com"
+}
+
+
+###
 //LOGIN
 
-GET "http://localhost:3000/login" HTTP/1.1
+POST "http://localhost:3000/login/login" HTTP/1.1
+Content-Type: application/json
 
-##
+{
+"email": "pedro@gmail.com", 
+"password": "345678"
+}
+
+###
 //REGISTER COMPRADOR
-DELETE  "http://localhost:3000/registercomp" HTTP/1.1
+POST "http://localhost:3000/register/registercomp" HTTP/1.1
+Content-Type: application/json
 
-##
+{
+"nombre": "pedro", 
+"apellido": "segal", 
+"email": "pedro@gmail.com", 
+"password": "345678"
+}
+
+###
 //REGISTER VENDEDOR
-PUT "http://localhost:3000/registervend" HTTP/1.1
+POST "http://localhost:3000/register/registervend" HTTP/1.1
+{
+"nombre": "juan", 
+"apellido": "perez", 
+"email": "juan@gmail.com", 
+"password": "345678",
+"zona":"Tigre",
+"impresora_modelo":"123",
+"impresora_materiales":"filamento",
+"post_procesado":"true"
+
+}

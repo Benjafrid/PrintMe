@@ -3,8 +3,8 @@ import VendedorController from '../controllers/vendedores.controller.js';
 
 const router = Router();
 
-router.get("/vendedorByID",VendedorController.obtenervendedorID)
-router.put("/updatevendedor",VendedorController.updatevendedor)
-router.delete("/deletevendedor",VendedorController.deletevendedor)
+router.get("/vendedorByID/:id",VendedorController.obtenervendedorID)
+router.put("/updatevendedor/:id",VendedorController.updatevendedor)
+router.delete("/deletevendedor/:id",VendedorController.deletevendedor)
 
 export default router;

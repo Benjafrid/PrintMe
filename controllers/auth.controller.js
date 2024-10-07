@@ -1,6 +1,6 @@
 import vendedorServices from "../services/vendedor.service.js";
 import CompradoresService from "../services/comprador.service.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config"; 
 
@@ -29,7 +29,7 @@ const registercomp = async (req, res) => {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
-        const existingcomp = await compradorServices.getCompradorByEmail(mail);
+        const existingcomp = await CompradoresService.getCompradorByEmail(mail);
         if (existingcomp) {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
