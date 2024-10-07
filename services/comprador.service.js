@@ -37,11 +37,12 @@ const obtenercompradorID = async (id) => {
     const client = new Client(config);
     await client.connect();
     const usuario = await client.query("SELECT * FROM comprador WHERE id = $1", [id])
-if (usuario.rows.lenght > 0){
-  return usuario;
-} else{
-    return null;
-}
+    if (usuario.rows.lenght < 0) {
+        return null;
+    }
+    else {
+        return usuario.rows[0];
+    }
 }
 
 const createcomprador = async (nombre, apellido, mail, contraseña) => {
@@ -69,13 +70,13 @@ const updatecomprador = async (nombre, apellido, mail, contraseña, id) => {
 const deletecomprador = async (id) => {
     const client = new Client(config);
     await client.connect();
-    const result = await client.query("DELETE FROM vendedor WHERE id = $1 RETURNING* ", [id]);
-    if (result.rows.lenght > 0) {
-        res.status(200).send('vendedor eliminado con exito: ${JSON.stringify(result.rows[0])}');
-    } else {
-        res.status(404).send('Vendedor no encontrado');
+    const result = await client.query("DELETE FROM comprador WHERE id = $1 RETURNING* ", [id]);
+    if (result.rows.length > 0) {
+        return result;
     }
-
+    else {
+        return null;
+    }
 };
 
 const CompradoresService = {

@@ -3,23 +3,24 @@ import CompradoresService from "../services/comprador.service.js";
 
 const obtenercompradoresID = async (req,res)=>{
     try {
-        const {id} = req.params.id;
+        const {id} = req.params;
         const comprador = await CompradoresService.obtenercompradorID(id);
         if (!comprador) return res.status(404).send("No se encontro comprador");
-
+        
         res.json({comprador: comprador})
+
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
 
-const updateComprador = async (req, res) => {
+const updateComprador = async ( req, res ) => {
     try {
         const {nombre, apellido, mail, contraseña, id} = req.body;
         const update = await CompradoresService.updatecomprador(nombre, apellido, mail, contraseña, id)
 
         if (!update) return res.status(400).json({message: "non se pudo actualizar"});
-
+        
         res.json({updated: update});
 
     } catch (error) {
@@ -28,10 +29,10 @@ const updateComprador = async (req, res) => {
 }
 const deletecomprador = async (req, res) => {
     try {
-        const {id} = req.body;
-        const deletecom = await CompradoresService.deletecomprador(id)
-
-        if (!deletecom) return res.status(400).json({message: "non se pudo actualizar"});
+        const {id} = req.params;
+        const deletecom = await CompradoresService.deletecomprador(id);
+        console.log(deletecom);
+        if (!deletecom) return res.status(400).json({message: "no se pudo eliminar"});
 
         res.json({deleted: deletecom});
 
