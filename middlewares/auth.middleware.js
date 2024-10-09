@@ -8,8 +8,6 @@ const { Client } = pkg;
 // Middleware para verificar el token
 export const verifyToken = async (req, res, next) => {
     const headerToken = req.headers['authorization'];
-    const client = new Client(config);
-    await client.connect();
 
     // Verificar si el token está proporcionado
     if (!headerToken) {
@@ -36,6 +34,9 @@ export const verifyToken = async (req, res, next) => {
       console.log(decoded)
 
         const {id} = decoded;
+        const client = new Client(config);
+        await client.connect();
+ 
        
         const usuario = await client.query('SELECT * FROM vendedor', [id])
        

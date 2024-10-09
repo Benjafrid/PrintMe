@@ -72,7 +72,7 @@ const login = async (req, res) => {
     
                 // Generando token para comprador
                 const tokencomprador = jwt.sign({ id: comprador.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-                return res.json({ comprador, tokencomprador });
+                console.log("Token comprador:", tokencomprador);
             }
     
             if (vendedor) {
@@ -85,7 +85,7 @@ const login = async (req, res) => {
     
                 // Generando token para vendedor
                 const tokenvendedor = jwt.sign({ id: vendedor.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-                return res.json({ vendedor, tokenvendedor });
+                console.log("Token vendedor:", tokenvendedor);
             }
         } catch (error) {
             console.error('Error durante el login:', error);
