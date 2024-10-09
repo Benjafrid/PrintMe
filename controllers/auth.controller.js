@@ -1,80 +1,96 @@
-import vendedorServices from "../services/vendedor.service.js";
-import CompradoresService from "../services/comprador.service.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import "dotenv/config"; 
+import "dotenv/config";
+import vendedorServices from "../services/vendedor.service.js";
+import CompradoresService from "../services/comprador.service.js";
 
 const registervendedor = async (req, res) => {
-    const { nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña} = req.body || {};
-    if (!nombre || !apellido || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado) {
+    const { nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña } = req.body || {};
+    if (!nombre || !apellido || !email || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
-        const existingUser = await vendedorServices.getVendedoresByEmail(mail);
+        const existingUser = await vendedorServices.getVendedoresByEmail(email);
         if (existingUser) {
             return res.status(400).json({ message: "El vendedor ya existe" });
         }
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await vendedorServices.createvendedor({ nombre, apellido, mail, password: hashedPassword });
-        res.status(201).json({ message: "vendedor creado con éxito" });
+        await vendedorServices.createvendedor({ nombre, apellido, email, password: hashedPassword });
+        res.status(201).json({ message: "Vendedor creado con éxito" });
     } catch (error) {
-        console.error('Error creating user:', error); 
+        console.error('Error creating vendedor:', error);
         res.status(500).json({ message: error.message });
     }
 };
 
 const registercomp = async (req, res) => {
-    const { nombre, apellido, email, contraseña} = req.body || {};
-    if (!nombre || !apellido || !email || !contraseña ) {
+    const { nombre, apellido, mail, contraseña } = req.body || {};
+    if (!nombre || !apellido || !mail || !contraseña) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
-        const existingcomp = await CompradoresService.getCompradorByEmail(email);
+        const existingcomp = await CompradoresService.getCompradorByEmail(mail);
         if (existingcomp) {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await CompradoresService.createcomprador({ nombre, apellido, email, contraseña: hashedPassword });
-        res.status(201).json({ message: "comprador creado con éxito" });
+        await CompradoresService.createcomprador({ nombre, apellido, mail, contraseña: hashedPassword });
+        res.status(201).json({ message: "Comprador creado con éxito" });
     } catch (error) {
-        console.error('Error creating user:', error); 
+        console.error('Error creating comprador:', error);
         res.status(500).json({ message: error.message });
     }
 };
-
 
 const login = async (req, res) => {
-    const { mail, contraseña } = req.body;
-    if (!mail || !contraseña) {
-        return res.status(400).json({ message: "Email y password requeridos" });
-    }
-    try {
-        const comprador = await CompradoresService.getCompradorByEmail(mail);
-        if (!comprador) {
-            return res.status(400).json({ message: "comprador no encontrado" });
+        const { mail, contraseña } = req.body;
+    
+        // Verificación de datos requeridos
+        if (!mail || !contraseña) {
+            return res.status(400).json({ message: "Email y contraseña requeridos" });
         }
-        const vendedor = await vendedorServices.getVendedoresByEmail(mail);
-        if(!vendedor){
-            return res.status(400).json({ message: "vendedor no encontrado" });
-        }
+    
+        try {
+            // Buscando al comprador y vendedor por email
+            const comprador = await CompradoresService.getCompradorByEmail(mail);
+            console.log("Comprador encontrado:", comprador);
+            const vendedor = await vendedorServices.getVendedoresByEmail(mail);
+            console.log("Vendedor encontrado:", vendedor);
+    
+            if (!comprador && !vendedor) {
+                return res.status(400).json({ message: "Usuario no encontrado" });
+            }
+    
+            // Verificando la contraseña
+            if (comprador) {
+                const isMatchcomprador = await bcrypt.compare(contraseña, comprador.contraseña);
+                console.log("Contraseña coincide para comprador:", isMatchcomprador);
 
-        const isMatchcomprador = await bcrypt.compare(contraseña, comprador.contraseña);
-        if (!isMatchcomprador) {
-            return res.status(400).json({ message: "Contraseña incorrecta" });
-        }
-        const isMatchvendedor = await bcrypt.compare(contraseña, vendedor.contraseña);
-        if (!isMatchvendedor) {
-            return res.status(400).json({ message: "Contraseña incorrecta" });
-        }
-        const tokenvendedor = jwt.sign({ id: vendedor.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        const tokencomprador = jwt.sign({ id: comprador.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+                if (!isMatchcomprador) {
+                    return res.status(400).json({ message: "Contraseña incorrecta" });
+                }
+    
+                // Generando token para comprador
+                const tokencomprador = jwt.sign({ id: comprador.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+                return res.json({ comprador, tokencomprador });
+            }
+    
+            if (vendedor) {
+                const isMatchvendedor = await bcrypt.compare(contraseña, vendedor.contraseña);
+                console.log("Contraseña coincide para vendedor:", isMatchvendedor);
 
-        res.json({ comprador,vendedor, tokenvendedor,tokencomprador });
-    } catch (error) {
-        console.error('Error during login:', error); 
-        res.status(500).json({ message: error.message });
-    }
-};
-
+                if (!isMatchvendedor) {
+                    return res.status(400).json({ message: "Contraseña incorrecta" });
+                }
+    
+                // Generando token para vendedor
+                const tokenvendedor = jwt.sign({ id: vendedor.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+                return res.json({ vendedor, tokenvendedor });
+            }
+        } catch (error) {
+            console.error('Error durante el login:', error);
+            return res.status(500).json({ message: "Error interno del servidor" });
+        }
+    };
 
 export default { registervendedor, registercomp, login };

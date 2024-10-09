@@ -8,7 +8,7 @@ const getVendedoresByEmail = async (mail) => {
 
     try {
         const { rows } = await client.query(
-            "SELECT * FROM usuarios WHERE mail = $1",
+            "SELECT * FROM vendedor WHERE mail = $1",
             [mail]
         );
         if (rows.length < 1) return null;
@@ -49,22 +49,22 @@ const obtenervendedorID = async (id) => {
 };
 
 
-const updatevendedor = async (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id) => {
+const updatevendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id) => {
     const client = new Client(config);
     await client.connect();
    const result= await client.query(
     'UPDATE vendedor SET nombre = $1, apellido = $2, email = $3, zona = $4, impresora_modelo = $5, impresora_materiales = $6, post_procesado = $7, contraseña = $8 WHERE id = $9 RETURNING*', 
-    [nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id]);
+    [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id]);
     if (result.rows.length > 0) {
         return result;
     } else {
         return null;
     }
 };
-const createvendedor = async (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id) => {
+const createvendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id) => {
     const client = new Client(config);
     await client.connect();
-    const createvend = await client.query("INSERT INTO vendedor (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*", [nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id]);
+    const createvend = await client.query("INSERT INTO vendedor (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*", [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id]);
     if (createvend.rowCount > 0) {
         return createvend.rows[0];
     } else {
