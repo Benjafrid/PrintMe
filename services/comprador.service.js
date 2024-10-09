@@ -59,13 +59,20 @@ const createcomprador = async (nombre, apellido, mail, contraseña) => {
 const updatecomprador = async (nombre, apellido, mail, contraseña, id) => {
     const client = new Client(config);
     await client.connect();
-    const result = await client.query("UPDATE comprador SET nombre = $2, apellido = $5, mail = $4, contraseña = $3 WHERE id = $1 RETURNING*", [nombre, id, mail, contraseña, apellido]);
-    if (result.rows.length > 0) {
-        return result;
+        const result = await client.query(
+        'UPDATE comprador SET nombre = $1, apellido = $2, mail = $3, contraseña = $4 WHERE id = $5 RETURNING *',
+        [nombre, apellido, mail, contraseña, id]
+    );
+
+    console.log(result);
+
+    if (result.rowCount > 0) {
+        return result.rows[0];
     } else {
         return null;
     }
 };
+
 
 const deletecomprador = async (id) => {
     const client = new Client(config);

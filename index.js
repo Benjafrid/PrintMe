@@ -4,6 +4,8 @@ import VendedorRouter from './routes/vendedores.router.js'
 import authRouter from './routes/auth.routes.js'
 
 const app = express();
+app.use(express.json());
+
 
 app.listen(3000, () => {
     console.log("PrintMe en puerto 3000");

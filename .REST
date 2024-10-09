@@ -1,33 +1,44 @@
 ###
 //COMPRADOR
-GET http://localhost:3000/compradores/compradorByID/1 HTTP/1.1
+GET http://localhost:3000/compradores/compradorByID/3 HTTP/1.1 
 
 ###
-DELETE  http://localhost:3000/compradores/deletecomprador/2 HTTP/1.1
-Content-Type: application/application/json
+DELETE  http://localhost:3000/compradores/deletecomprador HTTP/1.1
+Content-Type: application/json
 
 ###
-PUT http://localhost:3000/compradores/updatecomprador HTTP/1.1
+PUT http://localhost:3000/compradores/updatecomprador/1 HTTP/1.1
 Content-Type: application/json
 
 {
-"apellido": "juan", "email":"juanestebez@gmail.com"
+"nombre" : "Liam",
+"apellido": "corradi",
+"mail":"liam@gmail.com",
+"contraseña":"1234343",
+"id": 1
 }
-
 
 ###
 //VENDEDOR
-GET http://localhost:3000/vendedor/vendedorID/1 HTTP/1.1
+GET http://localhost:3000/vendedores/vendedorByID/1 HTTP/1.1
 
 ###
-DELETE  http://localhost:3000/vendedor/deletevendedor HTTP/1.1
+DELETE  http://localhost:3000/vendedores/deletevendedor/1 HTTP/1.1
 
 ###
-PUT http://localhost:3000/vendedor/updatecomprador HTTP/1.1
+PUT http://localhost:3000/vendedores/updatevendedor/3 HTTP/1.1
 Content-Type: application/json
 
 {
-"apellido": "agradnik", "email":"juanagradnik@gmail.com"
+"nombre": "felipe", 
+"apellido":"crespo", 
+"email" : "felipecrespo@gmail.com", 
+"zona" : "maliar", 
+"impresora_modelo" : "Impresora5",
+"impresora_materiales": "filamento naraja", 
+"post_procesado" : true, 
+"contraseña":"crespo123",
+"id":3
 }
 
 
@@ -38,8 +49,8 @@ POST http://localhost:3000/login/login HTTP/1.1
 Content-Type: application/json
 
 {
-"email": "pedro@gmail.com", 
-"password": "345678"
+"mail": "pedro@gmail.com", 
+"contraseña": "345678"
 }
 
 ###
@@ -50,8 +61,8 @@ Content-Type: application/json
 {
 "nombre": "pedro", 
 "apellido": "segal", 
-"email": "pedro@gmail.com", 
-"password": "345678"
+"mail": "pedro@gmail.com", 
+"contraseña": "345678"
 }
 
 ###
@@ -60,8 +71,8 @@ POST http://localhost:3000/register/registervend HTTP/1.1
 {
 "nombre": "juan", 
 "apellido": "perez", 
-"email": "juan@gmail.com", 
-"password": "345678",
+"mail": "juan@gmail.com", 
+"contraseña": "345678",
 "zona":"Tigre",
 "impresora_modelo":"123",
 "impresora_materiales":"filamento",

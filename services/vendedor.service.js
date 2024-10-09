@@ -39,42 +39,47 @@ const getvendedor = async (_, res) => {
 const obtenervendedorID = async (id) => {
     const client = new Client(config);
     await client.connect();
-    const vendedor = await client.query("SELECT * FROM comprador WHERE id = $1", [id])
-if (vendedor.rows.lenght > 0){
-  return vendedor;
-} else{
-    return null;
-}
+    const vendedor = await client.query("SELECT * FROM vendedor WHERE id = $1", [id])
+    if (vendedor.rows.lenght < 0) {
+        return null;
+    }
+    else {
+        return vendedor.rows[0];
+    }
 };
 
-const updatevendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña ) => {
+
+const updatevendedor = async (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id) => {
     const client = new Client(config);
     await client.connect();
-   const result= await client.query("UPDATE vendedor SET nombre = $2, apellido = $3, mail = $4, zona = $5, impresora_modelo = $6, impresora_materiales = $7, post_procesado = $8, contraseña = $9 WHERE id = $1 RETURNING*", [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
+   const result= await client.query(
+    'UPDATE vendedor SET nombre = $1, apellido = $2, email = $3, zona = $4, impresora_modelo = $5, impresora_materiales = $6, post_procesado = $7, contraseña = $8 WHERE id = $9 RETURNING*', 
+    [nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id]);
     if (result.rows.length > 0) {
         return result;
     } else {
         return null;
     }
 };
-const createvendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) => {
+const createvendedor = async (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id) => {
     const client = new Client(config);
     await client.connect();
-    const createvend = await client.query("INSERT INTO vendedor (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$9) RETURNING*", [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
-    if (createvend.rows.lenght > 0){
-      return createvend;
-    } else{
+    const createvend = await client.query("INSERT INTO vendedor (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*", [nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id]);
+    if (createvend.rowCount > 0) {
+        return createvend.rows[0];
+    } else {
         return null;
     }
 };
 
-const deletevendedor = async (req, res) => {
+const deletevendedor = async (id) => {
     const client = new Client(config);
     await client.connect();
-    const result = await Client.query("DELETE FROM vendedor WHERE id = $1 RETURNING* ", [id]);
+    const result = await client.query("DELETE FROM vendedor WHERE id = $1 RETURNING* ", [id]);
     if (result.rows.length > 0) {
-        return result;
-    } else {
+        return result.rows[0];
+    }
+    else {
         return null;
     }
 };
