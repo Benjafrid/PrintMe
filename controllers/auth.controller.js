@@ -14,7 +14,7 @@ const registervendedor = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: "El vendedor ya existe" });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(contraseña, 10);
         await vendedorServices.createvendedor({ nombre, apellido, mail, password: hashedPassword });
         res.status(201).json({ message: "vendedor creado con éxito" });
     } catch (error) {
@@ -24,17 +24,17 @@ const registervendedor = async (req, res) => {
 };
 
 const registercomp = async (req, res) => {
-    const { nombre, apellido, mail, contraseña} = req.body || {};
-    if (!nombre || !apellido || !mail || !contraseña ) {
+    const { nombre, apellido, email, contraseña} = req.body || {};
+    if (!nombre || !apellido || !email || !contraseña ) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
-        const existingcomp = await CompradoresService.getCompradorByEmail(mail);
+        const existingcomp = await CompradoresService.getCompradorByEmail(email);
         if (existingcomp) {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await compradorServices.createcomprador({ nombre, apellido, mail, contraseña: hashedPassword });
+        const hashedPassword = await bcrypt.hash(contraseña, 10);
+        await CompradoresService.createcomprador({ nombre, apellido, email, contraseña: hashedPassword });
         res.status(201).json({ message: "comprador creado con éxito" });
     } catch (error) {
         console.error('Error creating user:', error); 
@@ -67,7 +67,7 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Contraseña incorrecta" });
         }
         const tokenvendedor = jwt.sign({ id: vendedor.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        const tokencomprador = jwt.sign({ id: vendedor.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const tokencomprador = jwt.sign({ id: comprador.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
         res.json({ comprador,vendedor, tokenvendedor,tokencomprador });
     } catch (error) {

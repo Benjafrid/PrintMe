@@ -55,7 +55,7 @@ Content-Type: application/json
 
 ###
 //REGISTER COMPRADOR
-POST http://localhost:3000/register/registercomp HTTP/1.1
+POST http://localhost:3000/registercomprador/registercomp HTTP/1.1
 Content-Type: application/json
 
 {
@@ -67,7 +67,7 @@ Content-Type: application/json
 
 ###
 //REGISTER VENDEDOR
-POST http://localhost:3000/register/registervend HTTP/1.1
+POST http://localhost:3000/registervendedor/registervend HTTP/1.1
 {
 "nombre": "juan", 
 "apellido": "perez", 
