@@ -61,10 +61,10 @@ const updatevendedor = async (nombre, apellido, mail, zona, impresora_modelo, im
         return null;
     }
 };
-const createvendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id) => {
+const createvendedor = async (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) => {
     const client = new Client(config);
     await client.connect();
-    const createvend = await client.query("INSERT INTO vendedor (nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*", [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id]);
+    const createvend = await client.query('INSERT INTO vendedor (nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING*', [nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
     if (createvend.rowCount > 0) {
         return createvend.rows[0];
     } else {

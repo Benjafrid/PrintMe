@@ -5,17 +5,17 @@ import vendedorServices from "../services/vendedor.service.js";
 import CompradoresService from "../services/comprador.service.js";
 
 const registervendedor = async (req, res) => {
-    const { nombre, apellido, email, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña } = req.body || {};
-    if (!nombre || !apellido || !email || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado) {
+    const { nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña } = req.body || {};
+    if (!nombre || !apellido || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
-        const existingUser = await vendedorServices.getVendedoresByEmail(email);
+        const existingUser = await vendedorServices.getVendedoresByEmail(mail);
         if (existingUser) {
             return res.status(400).json({ message: "El vendedor ya existe" });
         }
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await vendedorServices.createvendedor({ nombre, apellido, email, password: hashedPassword });
+        await vendedorServices.createvendedor(nombre, apellido, mail, hashedPassword);
         res.status(201).json({ message: "Vendedor creado con éxito" });
     } catch (error) {
         console.error('Error creating vendedor:', error);
@@ -34,7 +34,7 @@ const registercomp = async (req, res) => {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await CompradoresService.createcomprador({ nombre, apellido, mail, contraseña: hashedPassword });
+        await CompradoresService.createcomprador(nombre, apellido, mail, hashedPassword);
         res.status(201).json({ message: "Comprador creado con éxito" });
     } catch (error) {
         console.error('Error creating comprador:', error);
@@ -74,7 +74,7 @@ const login = async (req, res) => {
                 const tokencomprador = jwt.sign({ id: comprador.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
                 console.log("Token comprador:", tokencomprador);
             }
-    
+            
             if (vendedor) {
                 const isMatchvendedor = await bcrypt.compare(contraseña, vendedor.contraseña);
                 console.log("Contraseña coincide para vendedor:", isMatchvendedor);

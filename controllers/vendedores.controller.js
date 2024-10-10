@@ -3,10 +3,10 @@ import VendedorServices from "../services/vendedor.service.js";
 const obtenervendedorID = async (req,res)=>{
     try {
         const {id} = req.params;
-        const comprador = await VendedorServices.obtenervendedorID(id);
-        if (!comprador) return res.status(404).send("No se encontro comprador");
+        const vendedor = await VendedorServices.obtenervendedorID(id);
+        if (!vendedor) return res.status(404).send("No se encontro comprador");
 
-        res.json({comprador: comprador})
+        res.json({vendedor: vendedor})
     } catch (error) {
         res.status(500).send(error.message);
     }

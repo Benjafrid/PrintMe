@@ -22,7 +22,7 @@ const getCompradorByEmail = async (mail) => {
 };
 
 const getAllcompradores = async (_, res) => {
-    const client = new Client(config);
+    const client = new Client(config); 
     await client.connect();
     try {
         const {rows, _} = await client.query("SELECT * FROM comprador")
@@ -48,7 +48,7 @@ const obtenercompradorID = async (id) => {
 const createcomprador = async (nombre, apellido, mail, contraseña) => {
     const client = new Client(config);
     await client.connect();
-    const createusu = await client.query("INSERT INTO comprador (nombre, apellido, mail, contraseña) VALUES ($1, $2, $3, $4) RETURNING*", [nombre, apellido, mail, contraseña]);
+    const createusu = await client.query('INSERT INTO comprador (nombre, apellido, mail, contraseña) VALUES ($1, $2, $3, $4) RETURNING *', [nombre, apellido, mail, contraseña]);
     if (createusu.rows.lenght > 0){
       return createusu;
     } else{

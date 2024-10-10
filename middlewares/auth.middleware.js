@@ -2,12 +2,14 @@ import jwt from "jsonwebtoken";
 import vendedoresControllers from "../controllers/vendedores.controller.js";
 import compradoresControllers from "../controllers/compradores.controller.js";
 import { config } from "../dbconfig.js";
+import 'dotenv/config';
 import pkg from "pg";
 const { Client } = pkg;
 
 // Middleware para verificar el token
 export const verifyToken = async (req, res, next) => {
     const headerToken = req.headers['authorization'];
+    console.log(headerToken);
 
     // Verificar si el token está proporcionado
     if (!headerToken) {
@@ -31,18 +33,20 @@ export const verifyToken = async (req, res, next) => {
         const decoded = jwt.verify(token, secret);
 
 
-      console.log(decoded)
+      console.log(decoded);
 
         const {id} = decoded;
         const client = new Client(config);
         await client.connect();
  
        
-        const usuario = await client.query('SELECT * FROM vendedor', [id])
+        const usuario = await client.query('SELECT * FROM vendedor WHERE id= $1',[id]);
+
+        console.log(usuario);
        
         // Si no se encuentra como comprador, intentar encontrar como vendedor
         if (!usuario) {
-            usuario = await client.query('SELECT * FROM comprador',[id]);
+            usuario = await client.query('SELECT * FROM comprador WHERE id= $1',[id]);
         }
 
         if (!usuario) {
@@ -53,12 +57,14 @@ export const verifyToken = async (req, res, next) => {
         req.id = id;
         req.role = usuario;
         next();
+
     } catch (error) {
         if (error.name === 'JsonWebTokenError') {
             return res.status(401).json({ error: "Token inválido." });
         } else if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ error: "Token expirado." });
         } else {
+            console.log(error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }

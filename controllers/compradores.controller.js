@@ -10,6 +10,7 @@ const obtenercompradoresID = async (req,res)=>{
         res.json({comprador: comprador})
 
     } catch (error) {
+        console.log(error);
         res.status(500).send(error.message);
     }
 };
