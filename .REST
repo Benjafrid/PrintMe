@@ -1,15 +1,15 @@
 ###
 //COMPRADOR
-GET http://localhost:3000/compradores/compradorByID/2
+GET http://localhost:3000/compradores/compradorByID/2 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcyODU2OTcxMywiZXhwIjoxNzI4NTczMzEzfQ.ZHjaIF4OcttKchbGI2yZyTw0flMHQ-eV6cNAjKvO8qg 
 Content-Type: application/json 
 ###
-DELETE  http://localhost:3000/compradores/deletecomprador/5
+DELETE  http://localhost:3000/compradores/deletecomprador/5 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcyODU2OTcxMywiZXhwIjoxNzI4NTczMzEzfQ.ZHjaIF4OcttKchbGI2yZyTw0flMHQ-eV6cNAjKvO8qg
 Content-Type: application/json
 
 ###
-PUT http://localhost:3000/compradores/updatecomprador/1
+PUT http://localhost:3000/compradores/updatecomprador/1 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcyODU2OTcxMywiZXhwIjoxNzI4NTczMzEzfQ.ZHjaIF4OcttKchbGI2yZyTw0flMHQ-eV6cNAjKvO8qg
 Content-Type: application/json
 
@@ -24,12 +24,17 @@ Content-Type: application/json
 ###
 //VENDEDOR
 GET http://localhost:3000/vendedores/vendedorByID/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzI4NTg1MDQxLCJleHAiOjE3Mjg1ODg2NDF9.ppvjU32GuBt30SietrhrxRjs4r9LvZxkwoD6swogT-U
+Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/vendedores/deletevendedor/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzI4NTg1MDQxLCJleHAiOjE3Mjg1ODg2NDF9.ppvjU32GuBt30SietrhrxRjs4r9LvZxkwoD6swogT-U
+Content-Type: application/json
 
 ###
 PUT http://localhost:3000/vendedores/updatevendedor/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzI4NTg1MDQxLCJleHAiOjE3Mjg1ODg2NDF9.ppvjU32GuBt30SietrhrxRjs4r9LvZxkwoD6swogT-U
 Content-Type: application/json
 
 {
@@ -52,8 +57,8 @@ POST http://localhost:3000/login/login HTTP/1.1
 Content-Type: application/json 
 
 {
-"mail": "ezi@gmail.com", 
-"contraseña": "1234343"
+"mail": "juanm@gmail.com", 
+"contraseña": "18976567678"
 }
 
 ###
@@ -74,12 +79,12 @@ POST http://localhost:3000/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre" : "Agustin", 
-"apellido" : "Maleh", 
-"mail": "maleh@gmail.com", 
-"zona" : "delvoto", 
-"impresora_modelo" : "Impresora9", 
-"impresora_materiales" : "Filamento rojo", 
-"post_procesado" : false, 
-"contraseña" : "1897688"
+"nombre": "juan", 
+"apellido": "maleh", 
+"mail": "juanm@gmail.com", 
+"zona": "delvoti", 
+"impresora_modelo": "impresora7", 
+"impresora_materiales": "filamento roji", 
+"post_procesado": false, 
+"contraseña": "18976567678"
 }
