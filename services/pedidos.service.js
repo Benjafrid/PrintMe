@@ -123,10 +123,10 @@ const createPedido = async (id_comprador, producto) => {
 
     try {
         // Validar que los platos existan
-        for (let plato of platos) {
+        for (let producto of producto) {
             const { rows } = await client.query(
                 "SELECT * FROM pedidos WHERE id = $1",
-                [plato.id]
+                [producto.id]
             );
 
             if (rows.length < 1) {
@@ -146,7 +146,7 @@ const createPedido = async (id_comprador, producto) => {
         // Agregar los platos al pedido
         for (let plato of platos) {
             await client.query(
-                "INSERT INTO pedidos_platos (id_pedido, id_plato, cantidad) VALUES ($1, $2, $3)",
+                "INSERT INTO pedidos_platos (id_pedido, id_producto , cantidad) VALUES ($1, $2, $3)",
                 [idPedido, plato.id, plato.cantidad]
             );
         }
@@ -213,7 +213,7 @@ const deletePedido = async (id) => {
     }
 };
 
-export default {
+const pedidosService = {
     getPedidoById,
     getProductoByPedido,
     getProductoByUser,
@@ -222,3 +222,4 @@ export default {
     updatePedido,
     deletePedido,
 };
+export default pedidosService;

@@ -107,7 +107,7 @@ const deletePedido = async (req, res) => {
     }
 };
 
-export default {
+ const pedidosControllers = {
     getPedidos,
     getPedidosByUser,
     getPedidoById,
@@ -117,3 +117,5 @@ export default {
     entregarPedido,
     deletePedido,
 };
+
+export default pedidosControllers;
