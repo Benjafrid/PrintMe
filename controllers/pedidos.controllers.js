@@ -1,8 +1,8 @@
-import pedidosService from "../services/pedidos.service.js";
+import pedidosService from "../services/pedidos.service";
 
 const getPedidos = async (_, res) => {
     try {
-        const pedidos = await pedidosService.getPedidos();
+        const pedidos = await pedidosService.getPedidos(id_pedidos);
         res.json(pedidos);
     } catch (error) {
         res.status(500).json({ message: error.message });

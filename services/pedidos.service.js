@@ -1,15 +1,15 @@
-import { config } from "../db.js";
+import { config } from "../dbconfig.js";
 import pkg from "pg";
 const { Client } = pkg;
 
-const getProductoByPedido = async (id) => {
+const getProductoByPedido = async (id_producto) => {
     const client = new Client(config);
     await client.connect();
 
     try {
         const { rows } = await client.query(
             "SELECT * FROM pedidos_producto WHERE id_productos = $1",
-            [id]
+            [id_producto]
         );
 
         if (rows.length < 1) throw new Error("Pedido no encontrado");
@@ -37,12 +37,12 @@ const getProductoByPedido = async (id) => {
     }
 };
 
-const Getproductos = async () => {
+const Getpedidos = async (id_pedidos) => {
     const client = new Client(config);
     await client.connect();
 
     try {
-        const { rows } = await client.query("SELECT * FROM pedidos");
+        const { rows } = await client.query("SELECT * FROM pedidos",[id_pedidos]);
 
         if (rows.length < 1) return [];
 
@@ -63,21 +63,21 @@ const Getproductos = async () => {
     }
 };
 
-const getPedidoById = async (id) => {
+const getPedidoById = async (id_pedidos) => {
     const client = new Client(config);
     await client.connect();
 
     try {
         const { rows } = await client.query(
             "SELECT * FROM pedidos WHERE id = $1",
-            [id]
+            [id_pedidos]
         );
 
         if (rows.length < 1) return null;
 
         const result = rows[0];
 
-        result.platos = await getProductoByPedido(id);
+        result.producto = await getProductoByPedido(id_producto);
 
         await client.end();
         return result;
@@ -138,19 +138,10 @@ const createPedido = async (id_comprador, producto) => {
         // Crear el pedido
         const { rows } = await client.query(
             "INSERT INTO pedidos (id_comprador, fecha, estado) VALUES ($1, $2, 'pendiente') RETURNING id",
-            [idUsuario, new Date()]
+            [id_comprador, new Date()]
         );
 
         const idPedido = rows[0].id;
-
-        // Agregar los platos al pedido
-        for (let plato of platos) {
-            await client.query(
-                "INSERT INTO pedidos_platos (id_pedido, id_producto , cantidad) VALUES ($1, $2, $3)",
-                [idPedido, plato.id, plato.cantidad]
-            );
-        }
-
         await client.end();
         return { id: idPedido };
     } catch (error) {
@@ -217,9 +208,9 @@ const pedidosService = {
     getPedidoById,
     getProductoByPedido,
     getProductoByUser,
-    Getproductos,
+    Getpedidos,
     createPedido,
     updatePedido,
-    deletePedido,
+    deletePedido
 };
 export default pedidosService;

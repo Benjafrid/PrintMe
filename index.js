@@ -3,6 +3,7 @@ import CompradorRouter from './routes/compradores.router.js'
 import VendedorRouter from './routes/vendedores.router.js'
 import authRouter from './routes/auth.routes.js'
 import multer from 'multer';
+import vendedorServices from './services/vendedor.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -42,4 +43,4 @@ app.use("/vendedores", VendedorRouter);
 app.use("/login",authRouter);
 app.use("/registercomprador",authRouter);
 app.use("/registervendedor",authRouter);
-app.use("/pedidos", pedidosRouter);
+app.use("/pedidos", VendedorRouter);

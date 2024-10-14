@@ -4,6 +4,7 @@ import compradoresControllers from "../controllers/compradores.controller.js";
 import { config } from "../dbconfig.js";
 import 'dotenv/config';
 import pkg from "pg";
+import vendedorServices from "../services/vendedor.service.js";
 const { Client } = pkg;
 
 // Middleware para verificar el token
@@ -68,5 +69,18 @@ export const verifyToken = async (req, res, next) => {
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
-}
+};
+export const verifyAdmin = async (req, res, next) => {
+    try {
+        const id = req.user.id;
+        const user = await vendedorServices.obtenervendedorID(id);
+        
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+        if (!user.admin) return res.status(403).json({ message: "Acceso denegado" });
+
+        next();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
