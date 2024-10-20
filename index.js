@@ -3,32 +3,7 @@ import CompradorRouter from './routes/compradores.router.js'
 import VendedorRouter from './routes/vendedores.router.js'
 import authRouter from './routes/auth.routes.js'
 import multer from 'multer';
-import vendedorServices from './services/vendedor.service.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const uploadDir = join(__dirname, "../uploads");
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, `${Date.now()}-${file.originalname}`)
-    }
-});
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-    if (allowedTypes.includes(file.mimetype)) {
-        cb(null, true);
-    } else {
-        cb(new Error('Invalid file type. Only PDF, PNG, JPEG, and JPG files are allowed.'), false);
-    }
-};
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
+import productosRouter from './routes/productos.routes.js'
 
 const app = express();
 app.use(express.json());
@@ -43,4 +18,4 @@ app.use("/vendedores", VendedorRouter);
 app.use("/login",authRouter);
 app.use("/registercomprador",authRouter);
 app.use("/registervendedor",authRouter);
-app.use("/pedidos", VendedorRouter);
+app.use("/productos", productosRouter)

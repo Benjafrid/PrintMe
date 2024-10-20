@@ -88,3 +88,60 @@ Content-Type: application/json
 "post_procesado": false, 
 "contraseña": "18976567678"
 }
+
+//PEDIDOS
+###
+GET http://localhost:3000/vendedores/pedidos HTTP/1.1
+
+{
+
+}
+
+###
+GET http://localhost:3000/vendedores/usuario HTTP/1.1
+
+{
+
+}
+###
+GET http://localhost:3000/vendedores/pedidosID/1 HTTP/1.1
+
+{
+
+}
+
+###
+GET http://localhost:3000/vendedores/create HTTP/1.1
+
+{
+
+}
+
+###
+GET http://localhost:3000/vendedores/comenzar/2 HTTP/1.1
+
+{
+
+}
+
+###
+GET http://localhost:3000/vendedores/entregar/1 HTTP/1.1
+
+{
+
+}
+
+###
+GET http://localhost:3000/vendedores/delete/2 HTTP/1.1
+
+{
+
+}
+
+//PRODUCTOS
+###
+GET http://localhost:3000/productos/delete/2 HTTP/1.1
+
+
+
+

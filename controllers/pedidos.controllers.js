@@ -1,8 +1,8 @@
-import pedidosService from "../services/pedidos.service";
+import pedidosService from "../services/pedidos.service.js";
 
 const getPedidos = async (_, res) => {
     try {
-        const pedidos = await pedidosService.getPedidos(id_pedidos);
+        const pedidos = await pedidosService.getPedidos();
         res.json(pedidos);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -10,11 +10,11 @@ const getPedidos = async (_, res) => {
 };
 
 const getPedidosByUser = async (req, res) => {
-    const userId = req.params;
+    const userId = req.user.id;
 
     try {
-        const pedidos = await pedidosService.getProductoByUser(userId);
-        if (pedidos.length == 0) return res.json([]);
+        const pedidos = await pedidosService.getPedidosByUser(userId);
+        if (pedidos.length === 0) return res.json([]);
         res.json(pedidos);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -34,19 +34,22 @@ const getPedidoById = async (req, res) => {
 };
 
 const createPedido = async (req, res) => {
-    const { platos } = req.body;
+    const { producto } = req.body;
 
-    if (!platos || !Array.isArray(platos) || platos.length === 0 || !platos.every(p => p.id && p.cantidad))
+    // Validar que los datos del pedido sean correctos
+    if (!producto || !Array.isArray(producto) || producto.length === 0 || !producto.every(p => p.id && p.cantidad)) {
         return res.status(400).json({ message: "Datos del pedido incorrectos" });
+    }
 
     try {
         const userId = req.user.id;
-        await PedidosService.createPedido(userId, platos);
+        await pedidosService.createPedido(userId, producto);
         res.status(201).json({ message: "Pedido creado con éxito" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const aceptarPedido = async (req, res) => {
     const { id } = req.params;
@@ -107,7 +110,7 @@ const deletePedido = async (req, res) => {
     }
 };
 
- const pedidosControllers = {
+const pedidosControllers = {
     getPedidos,
     getPedidosByUser,
     getPedidoById,

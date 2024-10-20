@@ -9,14 +9,12 @@ router.get("/vendedorByID/:id", verifyToken, VendedorController.obtenervendedorI
 router.put("/updatevendedor/:id",verifyToken, VendedorController.updatevendedor)
 router.delete("/deletevendedor/:id",verifyToken, VendedorController.deletevendedor)
 
-router.post("/registerUsers", upload.single('foto'), pedidosControllers.w);
-
-router.get("/pedidos", verifyToken, verifyAdmin, pedidosControllers.getPedidos);
-router.get("/usuario", verifyToken, pedidosControllers.getPedidosByUser);
-router.get("/:id", verifyToken, verifyAdmin, pedidosControllers.getPedidoById);
-router.post("/", verifyToken, pedidosControllers.createPedido);
-router.put("/:id/comenzar", verifyToken, verifyAdmin, pedidosControllers.comenzarPedido);
-router.put("/:id/entregar", verifyToken, verifyAdmin, pedidosControllers.entregarPedido);
-router.delete("/:id", verifyToken, verifyAdmin, pedidosControllers.deletePedido);
+router.get("/pedidos", pedidosControllers.getPedidos);
+router.get("/usuario", pedidosControllers.getPedidosByUser);
+router.get("/pedidosID/:id", pedidosControllers.getPedidoById);
+router.post("/create", pedidosControllers.createPedido);
+router.put("/comenzar/:id", pedidosControllers.comenzarPedido);
+router.put("/entregar/:id",  pedidosControllers.entregarPedido);
+router.delete("/delete/:id", pedidosControllers.deletePedido);
 
 export default router;
