@@ -10,9 +10,9 @@ router.put("/updatevendedor/:id",verifyToken, VendedorController.updatevendedor)
 router.delete("/deletevendedor/:id",verifyToken, VendedorController.deletevendedor)
 
 router.get("/pedidos", pedidosControllers.getPedidos);
-router.get("/usuario", pedidosControllers.getPedidosByUser);
+router.get("/usuarioid", pedidosControllers.getPedidosByUser);
 router.get("/pedidosID/:id", pedidosControllers.getPedidoById);
-router.post("/create", pedidosControllers.createPedido);
+router.post("/createpedido", verifyAdmin, pedidosControllers.createPedido);
 router.put("/comenzar/:id", pedidosControllers.comenzarPedido);
 router.put("/entregar/:id",  pedidosControllers.entregarPedido);
 router.delete("/delete/:id", pedidosControllers.deletePedido);

@@ -8,7 +8,7 @@ const getProductoByPedido = async (idPedido) => {
 
     try {
         const { rows } = await client.query(
-            "SELECT * FROM pedidos_productos WHERE id_pedido = $1",
+            "SELECT * FROM pedidos_productos WHERE id_pedidos = $1",
             [idPedido]
         );
 
@@ -21,7 +21,7 @@ const getProductoByPedido = async (idPedido) => {
                     [producto.id_producto]
                 );
 
-                if (rows.length < 1) throw new Error("Plato no encontrado");
+                if (rows.length < 1) throw new Error("Producto no encontrado");
 
                 return {
                     ...rows[0],
@@ -49,10 +49,10 @@ const getPedidos = async () => {
 
         const result = await Promise.all(
             rows.map(async (pedido) => {
-                const platos = await getPlatosByPedido(pedido.id);
+                const pedidos = await getProductoByPedido(pedido.id);
                 return {
                     ...pedido,
-                    platos,
+                    pedidos,
                 };
             })
         );
@@ -94,28 +94,30 @@ const getPedidosByUser = async (idUsuario) => {
     await client.connect();
 
     try {
-        const { rows } = await client.query(
+        // Obtener los pedidos del usuario
+        const { rows: pedidos } = await client.query(
             "SELECT * FROM pedidos WHERE id_comprador = $1",
             [idUsuario]
         );
 
-        if (rows.length < 1) return [];
+        if (pedidos.length === 0) return []; // Si no hay pedidos, retornar un array vacío
 
+        // Obtener los productos para cada pedido
         const result = await Promise.all(
-            rows.map(async (pedido) => {
-                const platos = await getPlatosByPedido(pedido.id);
+            pedidos.map(async (pedido) => {
+                const productos = await getProductoByPedido(pedido.id);
                 return {
                     ...pedido,
-                    platos,
+                    productos, // Agregar los productos al pedido
                 };
             })
         );
 
-        await client.end();
         return result;
     } catch (error) {
-        await client.end();
-        throw error;
+        throw error; // Re-lanzar el error para ser manejado fuera del servicio
+    } finally {
+        await client.end(); // Asegurar el cierre de la conexión en finally
     }
 };
 

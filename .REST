@@ -92,47 +92,61 @@ Content-Type: application/json
 //PEDIDOS
 ###
 GET http://localhost:3000/vendedores/pedidos HTTP/1.1
+Content-Type: application/json
 
 {
 
 }
 
 ###
-GET http://localhost:3000/vendedores/usuario HTTP/1.1
+GET http://localhost:3000/vendedores/usuarioid HTTP/1.1
+Content-Type: application/json
 
 {
 
 }
 ###
 GET http://localhost:3000/vendedores/pedidosID/1 HTTP/1.1
+Content-Type: application/json
+{
+
+}
+
+###
+POST http://localhost:3000/vendedores/createpedido HTTP/1.1
+Content-Type: application/json
+
+{
+"productos": [
+{
+    
+"id": 1, 
+"cantidad": 2
+
+}
+
+]
+}
+
+###
+POST http://localhost:3000/vendedores/comenzar/2 HTTP/1.1
+Content-Type: application/json
 
 {
 
 }
 
 ###
-GET http://localhost:3000/vendedores/create HTTP/1.1
+POST http://localhost:3000/vendedores/entregar/1 HTTP/1.1
+Content-Type: application/json
 
 {
 
 }
 
 ###
-GET http://localhost:3000/vendedores/comenzar/2 HTTP/1.1
-
-{
-
-}
-
-###
-GET http://localhost:3000/vendedores/entregar/1 HTTP/1.1
-
-{
-
-}
-
-###
-GET http://localhost:3000/vendedores/delete/2 HTTP/1.1
+DELETE  http://localhost:3000/vendedores/delete/2 HTTP/1.1
+Content-Type: application/json
 
 {
 
@@ -140,8 +154,12 @@ GET http://localhost:3000/vendedores/delete/2 HTTP/1.1
 
 //PRODUCTOS
 ###
-GET http://localhost:3000/productos/delete/2 HTTP/1.1
+DELETE  http://localhost:3000/productos/delete/2 HTTP/1.1
+Content-Type: application/json
 
+{
+
+}
 
 
 

@@ -34,16 +34,16 @@ const getPedidoById = async (req, res) => {
 };
 
 const createPedido = async (req, res) => {
-    const { producto } = req.body;
+    const { productos } = req.body;
 
     // Validar que los datos del pedido sean correctos
-    if (!producto || !Array.isArray(producto) || producto.length === 0 || !producto.every(p => p.id && p.cantidad)) {
+    if (!productos || !Array.isArray(productos) || productos.length === 0 || !productos.every(p => p.id && p.cantidad)) {
         return res.status(400).json({ message: "Datos del pedido incorrectos" });
     }
 
     try {
         const userId = req.user.id;
-        await pedidosService.createPedido(userId, producto);
+        await pedidosService.createPedido(userId, productos);
         res.status(201).json({ message: "Pedido creado con éxito" });
     } catch (error) {
         res.status(500).json({ message: error.message });

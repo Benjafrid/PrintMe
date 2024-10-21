@@ -23,7 +23,7 @@ export const verifyToken = async (req, res, next) => {
     if (tokenParts[0] !== 'Bearer' || tokenParts.length !== 2) {
         return res.status(400).json({ message: "Formato del token no válido" });
     }
-    console.log(tokenParts);
+    console.log(tokenParts); 
     const token = tokenParts[1];
 
 
@@ -72,15 +72,30 @@ export const verifyToken = async (req, res, next) => {
 };
 export const verifyAdmin = async (req, res, next) => {
     try {
-        const id = req.user.id;
-        const user = await vendedorServices.obtenervendedorID(id);
-        
-        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
-        if (!user.admin) return res.status(403).json({ message: "Acceso denegado" });
+        const id = req.id;
+        const user = req.user;
+        const client = new Client(config);
+        await client.connect();
+      
+        if (!id && !user) {
+            return res.status(400).json({ message: "ID o usuario no proporcionado" });
+        }
 
-        next();
+       
+        const usuario = await client.query('SELECT * FROM public."vendedores"',[id]);
+
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        // Verificar si el rol es 'admin'
+        if (usuario.role === 'admin') { 
+            next();
+        } else {
+            return res.status(403).json({ message: "Acceso prohibido, no eres administrador" });
+        }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(error); // Registrar el error
+        return res.status(500).json({ message: "Error del servidor al verificar administrador" });
     }
 };
-
