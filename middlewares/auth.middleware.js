@@ -72,30 +72,34 @@ export const verifyToken = async (req, res, next) => {
 };
 export const verifyAdmin = async (req, res, next) => {
     try {
-        const id = req.id;
-        const user = req.user;
-        const client = new Client(config);
-        await client.connect();
-      
-        if (!id && !user) {
-            return res.status(400).json({ message: "ID o usuario no proporcionado" });
+        const user = req.user; // Obtener el usuario desde req.user
+        
+        // Verificar si el usuario está autenticado
+        if (!user) {
+            return res.status(400).json({ message: "Usuario no autenticado" });
         }
 
-       
-        const usuario = await client.query('SELECT * FROM public."vendedores"',[id]);
+        const client = new Client(config);
+        await client.connect();
 
-        if (!usuario) {
+        // Obtener el usuario de la base de datos
+        const usuario = await client.query('SELECT * FROM public."vendedores" WHERE id = $1', [user.id]);
+
+        // Verificar si el usuario fue encontrado
+        if (usuario.rows.length < 1) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
         // Verificar si el rol es 'admin'
-        if (usuario.role === 'admin') { 
-            next();
+        if (usuario.rows[0].role === 'admin') {
+            return next(); // Llamar al siguiente middleware o controlador
         } else {
             return res.status(403).json({ message: "Acceso prohibido, no eres administrador" });
         }
     } catch (error) {
         console.error(error); // Registrar el error
         return res.status(500).json({ message: "Error del servidor al verificar administrador" });
-    }
+        }
 };
+
+
