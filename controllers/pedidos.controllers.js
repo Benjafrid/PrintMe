@@ -42,7 +42,7 @@ const createPedido = async (req, res) => {
     }
 
     try {
-        const userId = req.user.id;
+        const userId = req.user;
         await pedidosService.createPedido(userId, productos);
         res.status(201).json({ message: "Pedido creado con éxito" });
     } catch (error) {

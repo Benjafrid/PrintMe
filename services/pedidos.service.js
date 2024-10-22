@@ -133,7 +133,7 @@ const createPedido = async (idUsuario, productos) => {
                 [producto.id] 
             );
 
-            if (rows.length < 1) {
+            if (rows.length < 0) {
                 throw new Error(`Producto con id ${producto.id} no encontrado`);
             }
         }

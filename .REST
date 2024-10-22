@@ -91,7 +91,7 @@ Content-Type: application/json
 
 //PEDIDOS
 ###
-GET http://localhost:3000/vendedores/pedidos HTTP/1.1
+GET http://localhost:3000/pedidos/pedidos HTTP/1.1
 Content-Type: application/json
 
 {
@@ -99,37 +99,37 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/vendedores/usuarioid HTTP/1.1
+GET http://localhost:3000/pedidos/usuarioid HTTP/1.1
 Content-Type: application/json
 
 {
 
 }
 ###
-GET http://localhost:3000/vendedores/pedidosID/1 HTTP/1.1
+GET http://localhost:3000/pedidos/pedidosID/1 HTTP/1.1
 Content-Type: application/json
 {
 
 }
 
 ###
-POST http://localhost:3000/vendedores/createpedido HTTP/1.1
+POST http://localhost:3000/pedidos/createpedido HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzI5NTE3MTM2LCJleHAiOjE3Mjk1MjA3MzZ9.mgQqYGlw3b8d1nd0MmmVa0KHyjSmrtLACAcTS2MHs6s
 
 {
 "productos": [
 {
     
-"id": 1, 
-"cantidad": 2
+"id":1, 
+"cantidad":2
 
 }
-
 ]
 }
 
 ###
-POST http://localhost:3000/vendedores/comenzar/2 HTTP/1.1
+POST http://localhost:3000/pedidos/comenzar/2 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -137,7 +137,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/vendedores/entregar/1 HTTP/1.1
+POST http://localhost:3000/pedidos/entregar/1 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -145,7 +145,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/vendedores/delete/2 HTTP/1.1
+DELETE  http://localhost:3000/pedidos/delete/2 HTTP/1.1
 Content-Type: application/json
 
 {

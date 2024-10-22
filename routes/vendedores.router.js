@@ -12,7 +12,7 @@ router.delete("/deletevendedor/:id",verifyToken, VendedorController.deletevended
 router.get("/pedidos", pedidosControllers.getPedidos);
 router.get("/usuarioid", pedidosControllers.getPedidosByUser);
 router.get("/pedidosID/:id", pedidosControllers.getPedidoById);
-router.post("/createpedido", verifyAdmin, pedidosControllers.createPedido);
+router.post("/createpedido", pedidosControllers.createPedido);
 router.put("/comenzar/:id", pedidosControllers.comenzarPedido);
 router.put("/entregar/:id",  pedidosControllers.entregarPedido);
 router.delete("/delete/:id", pedidosControllers.deletePedido);

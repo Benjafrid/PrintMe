@@ -3,7 +3,6 @@ import CompradorRouter from './routes/compradores.router.js'
 import VendedorRouter from './routes/vendedores.router.js'
 import authRouter from './routes/auth.routes.js'
 import multer from 'multer';
-import productosRouter from './routes/productos.routes.js'
 
 const app = express();
 app.use(express.json());
@@ -18,4 +17,5 @@ app.use("/vendedores", VendedorRouter);
 app.use("/login",authRouter);
 app.use("/registercomprador",authRouter);
 app.use("/registervendedor",authRouter);
-app.use("/productos", productosRouter)
+app.use("/productos", CompradorRouter)
+app.use("/pedidos", VendedorRouter);
