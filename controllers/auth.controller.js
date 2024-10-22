@@ -58,7 +58,7 @@ const login = async (req, res) => {
             const comprador = await CompradoresService.getCompradorByEmail(mail);
             console.log("Comprador encontrado:", comprador);
             const vendedor = await vendedorServices.getVendedoresByEmail(mail);
-            console.log("Vendedor encontrado:", vendedor);
+            //console.log("Vendedor encontrado:", vendedor);
     
             if (!comprador && !vendedor) {
                 return res.status(400).json({ message: "Usuario no encontrado" });
