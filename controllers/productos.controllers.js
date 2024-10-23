@@ -17,7 +17,7 @@ const getProductoById = async (req, res) => {
     try {
         const plato = await productosService.getProductoById(id);
         if (!plato)
-            return res.status(404).json({ message: "Plato no encontrado" });
+            return res.status(404).json({ message: "Producto no encontrado" });
         res.json(plato);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,24 +25,24 @@ const getProductoById = async (req, res) => {
 };
 
 const createProducto = async (req, res) => {
-    const producto = req.body;
+    const  producto = req.body;
 
     if (!producto)
-        return res.status(400).json({ message: "Se necesita un plato" });
+        return res.status(400).json({ message: "Se necesita un producto" });
 
-    if (!producto.nombre || !producto.precio || !producto.descripcion)
+    if (!producto.nombre || !producto.precio || !producto.description)
         return res.status(400).json({ message: "Faltan campos por llenar" });
 
     try {
         await productosService.createProducto(producto);
-        res.json({ message: "Plato creado con éxito" });
+        res.json({ message: "Producto creado con éxito" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
 const updateProducto = async (req, res) => {
-    const { id, nombre, precio, descripcion } = req.body;
+    const { id, nombre, precio, description } = req.body;
     const productos = req.body;
 
     if (!id || !productos)
@@ -50,12 +50,12 @@ const updateProducto = async (req, res) => {
             .status(400)
             .json({ message: "Se necesita un ID y un plato" });
 
-    if (!productos.tipo || !productos.nombre || !productos.precio || !productos.descripcion)
+    if (!productos.nombre || !productos.precio || !productos.description || !productos.id)
         return res.status(400).json({ message: "Faltan campos por llenar" });
 
     try {
-        await productosService.updateProducto(id, nombre, precio, descripcion);
-        res.json({ message: "Plato actualizado con éxito" });
+        await productosService.updateProducto(id, nombre, precio, description);
+        res.json({ message: "Producto actualizado con éxito" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -68,7 +68,7 @@ const deleteProductos = async (req, res) => {
 
     try {
         await productosService.deleteProducto(id);
-        res.json({ message: "Plato eliminado con éxito" });
+        res.json({ message: "Producto eliminado con éxito" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

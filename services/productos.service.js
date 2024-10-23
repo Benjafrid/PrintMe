@@ -36,14 +36,14 @@ const getProductoById = async (id) => {
     }
 };
 
-const createProducto = async (nombre, precio, descripcion) => {
+const createProducto = async (productos) => {
     const client = new Client(config);
     await client.connect();
 
     try {
         const { rows } = await client.query(
-            "INSERT INTO productos (nombre, precio, descripcion) VALUES ($1, $2, $3)",
-            [nombre, precio, descripcion]
+            "INSERT INTO productos (nombre, precio, description) VALUES ($1, $2, $3)",
+            [productos.nombre, productos.precio, productos.description]
         );
 
         await client.end();
@@ -54,14 +54,14 @@ const createProducto = async (nombre, precio, descripcion) => {
     }
 };
 
-const updateProducto = async (id, nombre, precio, descripcion) => {
+const updateProducto = async (id, nombre, precio, description) => {
     const client = new Client(config);
     await client.connect();
 
     try {
         const { rows } = await client.query(
-            "UPDATE platos SET nombre = $1, precio = $2, descripcion = $3 WHERE id = $4",
-            [nombre, precio, descripcion, id]
+            "UPDATE productos SET nombre = $1, precio = $2, description = $3 WHERE id = $4",
+            [nombre, precio, description, id]
         );
 
         await client.end();

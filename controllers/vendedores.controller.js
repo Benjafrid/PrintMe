@@ -14,11 +14,11 @@ const obtenervendedorID = async (req,res)=>{
 
 const updatevendedor = async (req, res) => {
     try {
-        const {nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id} = req.body;
-        if (!nombre || !apellido || !mail || !contraseña || !id || !zona || !impresora_modelo || !impresora_materiales || !post_procesado) {
+        const {nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id, admin} = req.body;
+        if (!nombre || !apellido || !mail || !contraseña || !id || !zona || !impresora_modelo || !impresora_materiales || !post_procesado || !admin) {
             return res.status(400).json({ message: "Faltan campos requeridos" });
         }
-        const update = await VendedorServices.updatevendedor(nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña,id);
+        const update = await VendedorServices.updatevendedor(nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id, admin);
         if (!update) return res.status(400).json({message: "no se pudo actualizar"});
         res.json({updated: update});
 

@@ -10,9 +10,9 @@ router.put("/updatecomprador/:id",verifyToken, CompradoresController.updateCompr
 router.delete("/deletecomprador/:id", verifyToken, CompradoresController.deletecomprador);
 
 router.get("/", productosControllers.getProductos);
-router.get("/producto/:id", productosControllers.getProductoById);
-router.post("/create", verifyToken, verifyAdmin, productosControllers.createProducto);
-router.put("/update/:id", verifyToken, verifyAdmin, productosControllers.updateProducto);
-router.delete("/delete/:id", verifyToken, verifyAdmin, productosControllers.deleteProductos);
+router.get("/productoid/:id", productosControllers.getProductoById);
+router.post("/create", verifyToken, productosControllers.createProducto);
+router.put("/update/:id", verifyToken, productosControllers.updateProducto);
+router.delete("/delete/:id", verifyToken, productosControllers.deleteProductos);
 
 export default router;

@@ -10,11 +10,11 @@ router.put("/updatevendedor/:id",verifyToken, VendedorController.updatevendedor)
 router.delete("/deletevendedor/:id",verifyToken, VendedorController.deletevendedor)
 
 router.get("/pedidos", pedidosControllers.getPedidos);
-router.get("/usuarioid", pedidosControllers.getPedidosByUser);
+router.get("/:id", pedidosControllers.getPedidosByUser);
 router.get("/pedidosID/:id", pedidosControllers.getPedidoById);
 router.post("/createpedido",verifyToken, pedidosControllers.createPedido);
-router.put("/comenzar/:id", pedidosControllers.comenzarPedido);
-router.put("/entregar/:id",  pedidosControllers.entregarPedido);
-router.delete("/delete/:id", pedidosControllers.deletePedido);
+router.put("/comenzar/:id", verifyToken, verifyAdmin, pedidosControllers.comenzarPedido);
+router.put("/entregar/:id",  verifyToken, verifyAdmin, pedidosControllers.entregarPedido);
+router.delete("/delete/:id", verifyToken, verifyAdmin, pedidosControllers.deletePedido);
 
 export default router;

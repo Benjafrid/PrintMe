@@ -72,10 +72,10 @@ export const verifyToken = async (req, res, next) => {
 };
 export const verifyAdmin = async (req, res, next) => {
     try {
-        const user = req.user; // Obtener el usuario desde req.user
+        const id = req.id; // Obtener el usuario desde req.user
         
         // Verificar si el usuario está autenticado
-        if (!user) {
+        if (!id) {
             return res.status(400).json({ message: "Usuario no autenticado" });
         }
 
@@ -83,10 +83,11 @@ export const verifyAdmin = async (req, res, next) => {
         await client.connect();
 
         // Obtener el usuario de la base de datos
-        const usuario = await client.query('SELECT * FROM public."vendedores" WHERE id = $1', [user.id]);
+        const usuario = await client.query('SELECT * FROM vendedor WHERE id = $1', [id]);
 
         // Verificar si el usuario fue encontrado
         if (usuario.rows.length < 1) {
+            console.log(usuario);
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 

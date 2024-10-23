@@ -8,11 +8,11 @@ const getProductoByPedido = async (idPedido) => {
 
     try {
         const { rows } = await client.query(
-            "SELECT * FROM pedidos_productos WHERE id_pedidos = $1",
+            "SELECT * FROM pedidos_productos WHERE id_pedido = $1",
             [idPedido]
         );
 
-        if (rows.length < 1) throw new Error("Pedido no encontrado");
+        if (rows.length < 0) throw new Error("Pedido no encontrado");
 
         const result = await Promise.all(
             rows.map(async (producto) => {
@@ -21,7 +21,7 @@ const getProductoByPedido = async (idPedido) => {
                     [producto.id_producto]
                 );
 
-                if (rows.length < 1) throw new Error("Producto no encontrado");
+                if (rows.length == 0) throw new Error("Producto no encontrado");
 
                 return {
                     ...rows[0],
@@ -46,6 +46,7 @@ const getPedidos = async () => {
         const { rows } = await client.query("SELECT * FROM pedidos");
 
         if (rows.length < 1) return [];
+        console.log(rows);
 
         const result = await Promise.all(
             rows.map(async (pedido) => {
@@ -79,7 +80,7 @@ const getPedidoById = async (id) => {
 
         const result = rows[0];
 
-        result.platos = await getPlatosByPedido(id);
+        result.producto = await getProductoByPedido(id);
 
         await client.end();
         return result;
@@ -140,7 +141,7 @@ const createPedido = async (idUsuario, productos) => {
 
         // Crear el pedido
         const { rows } = await client.query(
-            "INSERT INTO pedidos (id_comprador, fecha, estado) VALUES ($1, $2, 'pendiente') RETURNING id",
+            "INSERT INTO pedidos (id_comprador, fecha, estado) VALUES ($1, $2, 'pendiente', $4) RETURNING id",
             [idUsuario, new Date()]
         );
 

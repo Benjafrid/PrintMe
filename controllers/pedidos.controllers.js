@@ -10,7 +10,7 @@ const getPedidos = async (_, res) => {
 };
 
 const getPedidosByUser = async (req, res) => {
-    const userId = req.user.id;
+    const userId = req.id;
 
     try {
         const pedidos = await pedidosService.getPedidosByUser(userId);
@@ -84,7 +84,7 @@ const comenzarPedido = async (req, res) => {
 const entregarPedido = async (req, res) => {
     const { id } = req.params;
 
-    try {
+try {
         const pedido = await pedidosService.getPedidoById(id);
         if (!pedido) return res.status(404).json({ message: "Pedido no encontrado" });
         if (pedido.estado !== "en camino") return res.status(400).json({ message: "Pedido no está en camino" });
