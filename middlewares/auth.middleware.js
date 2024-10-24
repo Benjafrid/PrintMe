@@ -72,7 +72,7 @@ export const verifyToken = async (req, res, next) => {
 };
 export const verifyAdmin = async (req, res, next) => {
     try {
-        const id = req.id; // Obtener el usuario desde req.user
+        const id = req.id; // Obtener el usuario 
         
         // Verificar si el usuario está autenticado
         if (!id) {
@@ -87,7 +87,6 @@ export const verifyAdmin = async (req, res, next) => {
 
         // Verificar si el usuario fue encontrado
         if (usuario.rows.length < 1) {
-            console.log(usuario);
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 

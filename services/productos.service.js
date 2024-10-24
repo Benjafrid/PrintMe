@@ -1,6 +1,8 @@
 import { config } from "../dbconfig.js";
 import pkg from "pg";
 const { Client } = pkg;
+import cloudinary from "../upload.js";
+import fs from "fs";
 
 const getProductos = async () => {
     const client = new Client(config);
@@ -90,12 +92,32 @@ const deleteProducto = async (id) => {
     }
 };
 
+const uploadFoto = async(foto)=>{
+    const resultFoto = await cloudinary.uploader.upload(foto.path, { folder: 'fotos' });
+    const fotoUrl = resultFoto.secure_url;
+    console.log('URL de la foto subida:', fotoUrl);
+    const client = new Client(config);
+    await client.connect();
+
+   const fotos = await client.query (`INSERT INTO public.vendedor WHERE foto = $1 RETURNING *`, [fotoUrl]);
+   fs.unlinkSync(foto);
+
+   if (fotos.rows.length > 0) {
+    return fotos.rows[0];
+}
+else {
+    return null;
+}
+
+}
+
 const productosService = {
     getProductos,
     getProductoById,
     createProducto,
     updateProducto,
-    deleteProducto
+    deleteProducto,
+    uploadFoto
 };
 
 export default productosService;

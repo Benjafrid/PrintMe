@@ -58,8 +58,8 @@ POST http://localhost:3000/login/login HTTP/1.1
 Content-Type: application/json 
 
 {
-"mail": "urielez@gmail.com", 
-"contraseña": "3453Perez"
+"mail": "panzu@gmail.com", 
+"contraseña": "345panzu"
 }
 
 ###
@@ -80,14 +80,14 @@ POST http://localhost:3000/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre": "leouri", 
-"apellido": "urielez", 
-"mail": "urielez@gmail.com", 
+"nombre": "panzono", 
+"apellido": "panzono", 
+"mail": "panzu@gmail.com", 
 "zona": "delvoti", 
 "impresora_modelo": "impresora7", 
 "impresora_materiales": "filamento roji", 
 "post_procesado": false, 
-"contraseña": "3453Perez",
+"contraseña": "345panzu",
 "admin": true
 }
 
@@ -133,18 +133,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6M
 ###
 PUT http://localhost:3000/pedidos/comenzar/1 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImlhdCI6MTcyOTcwOTE1NiwiZXhwIjoxNzI5NzEyNzU2fQ._cZVaHKxOu9HzhcAfQatR6-4A23YtlmffRckzIa51DE
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImlhdCI6MTcyOTcyOTY1NCwiZXhwIjoxNzI5NzMzMjU0fQ.n904lYVe5gUuxnEddOSPKaoJ1qxuUKgjF1Yk8LLYtls
 
 {
 
 }
 
-
 ###
 PUT http://localhost:3000/pedidos/entregar/1 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTcyOTcwOTQ2MSwiZXhwIjoxNzI5NzEzMDYxfQ.3tDXY9xShcNTMzwlhKtgKZMJb5-qP8Uwa2owOuXuCFc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImlhdCI6MTcyOTcyOTY1NCwiZXhwIjoxNzI5NzMzMjU0fQ.n904lYVe5gUuxnEddOSPKaoJ1qxuUKgjF1Yk8LLYtls
 
 {
 
