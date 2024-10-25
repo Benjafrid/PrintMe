@@ -58,8 +58,8 @@ POST http://localhost:3000/login/login HTTP/1.1
 Content-Type: application/json 
 
 {
-"mail": "juasa@gmail.com", 
-"contraseña": "45jua"
+"mail": "benja1@gmail.com", 
+"contraseña": "benja12"
 }
 
 ###
@@ -80,14 +80,14 @@ POST http://localhost:3000/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre": "juana", 
-"apellido": "saba", 
-"mail": "juasa@gmail.com", 
+"nombre": "benjamin", 
+"apellido": "fridman", 
+"mail": "benja1@gmail.com", 
 "zona": "delvoti", 
 "impresora_modelo": "impresora7", 
 "impresora_materiales": "filamento roji", 
 "post_procesado": false, 
-"contraseña": "45jua",
+"contraseña": "benja12",
 "admin":"admin"
 }
 
@@ -119,30 +119,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6M
 ###
 POST http://localhost:3000/pedidos/createpedido HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlhdCI6MTcyOTczMjIzNCwiZXhwIjoxNzI5NzM1ODM0fQ.xm9CE25oJBSHEv3aLKBj4d4ZBYFdZD2JDDyju6iY3Ew
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTcyOTg5MTIwOCwiZXhwIjoxNzI5ODk0ODA4fQ.u5Xhn4HseA8VwyGFrglyHiGx-XYcA9u_gytVzOHkxdM
 
 {
     "productos": [
         {
-            "id": 5, 
-            "cantidad": 6
+            "id": 6, 
+            "cantidad": 10
         }
     ]
 }
 
 ###
-PUT http://localhost:3000/pedidos/comenzar/15 HTTP/1.1
+PUT http://localhost:3000/pedidos/comenzar/18 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsImlhdCI6MTcyOTgxODI1NywiZXhwIjoxNzI5ODIxODU3fQ.6gVS1NFKRnHVOSNYJ7itm8fgsF9bhtugJ12ziZqMp8Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTcyOTg5MTIwOCwiZXhwIjoxNzI5ODk0ODA4fQ.u5Xhn4HseA8VwyGFrglyHiGx-XYcA9u_gytVzOHkxdM
 
 {
 
 }
 
 ###
-PUT http://localhost:3000/pedidos/entregar/11 HTTP/1.1
+PUT http://localhost:3000/pedidos/entregar/18 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsImlhdCI6MTcyOTgxODI1NywiZXhwIjoxNzI5ODIxODU3fQ.6gVS1NFKRnHVOSNYJ7itm8fgsF9bhtugJ12ziZqMp8Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTcyOTg5MTIwOCwiZXhwIjoxNzI5ODk0ODA4fQ.u5Xhn4HseA8VwyGFrglyHiGx-XYcA9u_gytVzOHkxdM
 
 {
 
@@ -187,10 +187,10 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/productos/create HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlhdCI6MTcyOTczMjIzNCwiZXhwIjoxNzI5NzM1ODM0fQ.xm9CE25oJBSHEv3aLKBj4d4ZBYFdZD2JDDyju6iY3Ew
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTcyOTg5MTIwOCwiZXhwIjoxNzI5ODk0ODA4fQ.u5Xhn4HseA8VwyGFrglyHiGx-XYcA9u_gytVzOHkxdM
 
 {
- "nombre": "Leo Reyes (Filamento)",
+ "nombre": "Leo 3 (Filamento)",
  "precio": 1000,
  "description": "Filamento verde de muy buena calidad"
  

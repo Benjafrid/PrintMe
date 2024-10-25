@@ -72,14 +72,22 @@ const comenzarPedido = async (req, res) => {
     try {
         const pedido = await pedidosService.getPedidoById(id);
         if (!pedido) return res.status(404).json({ message: "Pedido no encontrado" });
-        if (pedido.estado !== "aceptado") return res.status(400).json({ message: "Pedido no está en estado aceptado" });
 
-        await pedidosService.updatePedido(id, "en camino" );
+        // Log más detallado
+        console.log('Valor completo del pedido:', pedido);
+        console.log('Estado del pedido en código:', pedido.estado, typeof pedido.estado);
+
+        if (pedido.estado !== "aceptado") {
+            return res.status(400).json({ message: "Pedido no está en estado aceptado" });
+        }
+
+        await pedidosService.updatePedido(id, "en camino");
         res.json({ message: "Pedido en camino" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const entregarPedido = async (req, res) => {
     const { id } = req.params;

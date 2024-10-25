@@ -43,7 +43,6 @@ export const verifyToken = async (req, res, next) => {
        
         const usuario = await client.query('SELECT * FROM vendedor WHERE id= $1',[id]);
 
-        console.log(usuario);
        
         // Si no se encuentra como comprador, intentar encontrar como vendedor
         if (!usuario) {
@@ -72,7 +71,7 @@ export const verifyToken = async (req, res, next) => {
 };
 export const verifyAdmin = async (req, res, next) => {
     try {
-        const id = req.id; // Obtener el usuario 
+        const id = req.id; // Obtener el ID del usuario autenticado
         
         // Verificar si el usuario está autenticado
         if (!id) {
@@ -83,23 +82,30 @@ export const verifyAdmin = async (req, res, next) => {
         await client.connect();
 
         // Obtener el usuario de la base de datos
-        const usuario = await client.query('SELECT * FROM public."vendedor" WHERE id = $1', [id]);
+        const result = await client.query('SELECT * FROM public."vendedor" WHERE id = $1', [id]);
 
         // Verificar si el usuario fue encontrado
-        if (usuario.rows.length < 1) {
+        if (result.rows.length < 1) {
+            await client.end();
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
-        
-        // Verificar si el rol es 'admin'
-        if (usuario.role === true) {
+
+        const usuario = result.rows[0];
+
+        // Debug para verificar el valor del campo admin
+        console.log('Usuario encontrado:', usuario);
+        console.log('Valor de admin:', usuario.admin);
+
+        // Verificar si el campo admin es true
+        if (usuario.admin === true|| usuario.admin === 'true' || Boolean(usuario.admin) === true) {
+            await client.end();
             return next(); // Llamar al siguiente middleware o controlador
         } else {
+            await client.end();
             return res.status(403).json({ message: "Acceso prohibido, no eres administrador" });
         }
     } catch (error) {
-        console.error(error); // Registrar el error
+        console.error('Error en verifyAdmin:', error); // Registrar el error
         return res.status(500).json({ message: "Error del servidor al verificar administrador" });
-        }
+    }
 };
-
-

@@ -12,19 +12,21 @@ const getProductoByPedido = async (idPedido) => {
             [idPedido]
         );
 
-        if (rows.length < 0) throw new Error("Pedido no encontrado");
+        // Verificar si no hay productos relacionados con el pedido
+        if (rows.length === 0) throw new Error("Pedido no encontrado");
 
         const result = await Promise.all(
             rows.map(async (producto) => {
-                const { rows } = await client.query(
+                const { rows: productoRows } = await client.query(
                     "SELECT * FROM productos WHERE id = $1",
                     [producto.id_producto]
                 );
 
-                if (rows.length == 0) throw new Error("Producto no encontrado");
+
+                if (productoRows.length === 0) throw new Error("Producto no encontrado");
 
                 return {
-                    ...rows[0],
+                    ...productoRows[0],
                     cantidad: producto.cantidad,
                 };
             })
@@ -141,7 +143,7 @@ const createPedido = async (idUsuario, productos) => {
 
         // Crear el pedido
         const { rows } = await client.query(
-            "INSERT INTO pedidos (id_vendedor, fecha, estado) VALUES ($1, $2, 'pendiente') RETURNING id",
+            "INSERT INTO pedidos (id_vendedor, fecha, estado) VALUES ($1, $2, 'aceptado') RETURNING id",
             [idUsuario, new Date()]
         );
 
