@@ -83,15 +83,15 @@ export const verifyAdmin = async (req, res, next) => {
         await client.connect();
 
         // Obtener el usuario de la base de datos
-        const usuario = await client.query('SELECT * FROM vendedor WHERE id = $1', [id]);
+        const usuario = await client.query('SELECT * FROM public."vendedor" WHERE id = $1', [id]);
 
         // Verificar si el usuario fue encontrado
         if (usuario.rows.length < 1) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
-
+        
         // Verificar si el rol es 'admin'
-        if (usuario.rows[0].role === 'admin') {
+        if (usuario.role === true) {
             return next(); // Llamar al siguiente middleware o controlador
         } else {
             return res.status(403).json({ message: "Acceso prohibido, no eres administrador" });

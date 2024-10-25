@@ -97,7 +97,7 @@ const getPedidosByUser = async (idUsuario) => {
     try {
         // Obtener los pedidos del usuario
         const { rows: pedidos } = await client.query(
-            "SELECT * FROM pedidos WHERE id_comprador = $1",
+            "SELECT * FROM pedidos WHERE id_vendedor = $1",
             [idUsuario]
         );
 
@@ -141,7 +141,7 @@ const createPedido = async (idUsuario, productos) => {
 
         // Crear el pedido
         const { rows } = await client.query(
-            "INSERT INTO pedidos (id_comprador, fecha, estado) VALUES ($1, $2, 'pendiente', $4) RETURNING id",
+            "INSERT INTO pedidos (id_vendedor, fecha, estado) VALUES ($1, $2, 'pendiente') RETURNING id",
             [idUsuario, new Date()]
         );
 
