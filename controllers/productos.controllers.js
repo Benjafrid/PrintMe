@@ -1,5 +1,8 @@
 import productosService from "../services/productos.service.js";
-import cloudinary from '../upload.js';
+import { config } from "../dbconfig.js";
+import pkg from "pg";
+const { Client } = pkg;
+
 
 const getProductos = async (_, res) => {
     try {
@@ -27,8 +30,10 @@ const getProductoById = async (req, res) => {
 
 const createProducto = async (req, res) => {
     const  producto = req.body;
-
-    if (!producto)
+    const client = new Client(config);
+    await client.connect();
+   
+      if (!producto)
         return res.status(400).json({ message: "Se necesita un producto" });
 
     if (!producto.nombre || !producto.precio || !producto.description)
@@ -40,26 +45,34 @@ const createProducto = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+}
 
-
-};
 
 const updateProducto = async (req, res) => {
-    const { id, nombre, precio, description } = req.body;
-    const productos = req.body;
+    const id = req.params.id;  // Obtener el ID de los parámetros de la URL
+    const { nombre, precio, description } = req.body;
 
-    if (!id || !productos)
-        return res
-            .status(400)
-            .json({ message: "Se necesita un ID y un plato" });
-
-    if (!productos.nombre || !productos.precio || !productos.description || !productos.id)
-        return res.status(400).json({ message: "Faltan campos por llenar" });
+    // Verifica que se proporcione un ID y que los campos necesarios están completos
+    if (!id) {
+        return res.status(400).json({ message: "Se necesita un ID." });
+    }
+    
+    if (!nombre || !precio || !description) {
+        return res.status(400).json({ message: "Faltan campos por llenar." });
+    }
 
     try {
-        await productosService.updateProducto(id, nombre, precio, description);
-        res.json({ message: "Producto actualizado con éxito" });
+        // Llama al servicio para actualizar el producto
+        const resultado = await productosService.updateProducto(id, nombre, precio, description);
+
+        // Verifica si se actualizó algún registro
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ message: "Producto no encontrado." });
+        }
+
+        res.json({ message: "Producto actualizado con éxito." });
     } catch (error) {
+        console.error(error); // Registrar error para depuración
         res.status(500).json({ message: error.message });
     }
 };
@@ -77,27 +90,6 @@ const deleteProductos = async (req, res) => {
     }
 };
 
-const uploadProducto = async(req,res)=>{
-    const foto = req.files?.foto?.[0] || null;
-
-    console.log('Foto del producto:', foto);
-
-    // Validar que la foto fue cargada
-    if (!foto) {
-      return res.status(400).json({ error: 'Se requiere una foto.' });
-    }
-
-      const fotoFile = foto[0];
-
-      // Validar la extensión de la foto y del certificado
-      const extensionesPermitidas = ['png', 'jpeg', 'jpg'];
-      const extensionFoto = fotoFile.originalname.split('.').pop().toLowerCase();
-      const extensionCertificado = certificadoFile.originalname.split('.').pop().toLowerCase();
-
-      if (!extensionesPermitidas.includes(extensionFoto) || extensionCertificado !== 'pdf') {
-        return res.status(400).send('Error: Extensiones no permitidas. La foto debe ser PNG, JPEG o JPG y el certificado debe ser PDF.');
-      }
-}
 
 const productosControllers = {
     getProductos,
@@ -105,7 +97,6 @@ const productosControllers = {
     createProducto,
     updateProducto,
     deleteProductos,
-    uploadProducto
 };
 
 export default productosControllers;

@@ -4,7 +4,9 @@ import CompradoresController from '../controllers/compradores.controller.js';
 import productosControllers from '../controllers/productos.controllers.js';
 import upload from "../upload.js"
 
+
 const router = Router();
+
 
 //COMPRADORES
 router.get("/compradorByID/:id", verifyToken, CompradoresController.obtenercompradoresID);
@@ -15,11 +17,8 @@ router.delete("/deletecomprador/:id", verifyToken, CompradoresController.deletec
 router.get("/", productosControllers.getProductos);
 router.get("/productoid/:id", productosControllers.getProductoById);
 router.post("/create", verifyToken, productosControllers.createProducto);
-router.put("/update/:id", verifyToken, productosControllers.updateProducto);
-router.delete("/delete/:id", verifyToken, productosControllers.deleteProductos);
-
-//UPLOAD
-//router.post("/subirfoto", upload.single([{ name: 'foto'}]), productosControllers.uploadProducto);
+router.put("/update/:id", verifyToken, verifyAdmin, productosControllers.updateProducto);
+router.delete("/delete/:id", verifyToken, verifyAdmin, productosControllers.deleteProductos);
 
 
 export default router;

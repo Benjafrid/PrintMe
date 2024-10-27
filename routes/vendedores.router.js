@@ -17,4 +17,7 @@ router.put("/comenzar/:id", verifyToken, verifyAdmin, pedidosControllers.comenza
 router.put("/entregar/:id",  verifyToken, verifyAdmin, pedidosControllers.entregarPedido);
 router.delete("/delete/:id", verifyToken, verifyAdmin, pedidosControllers.deletePedido);
 
+router.get("/buscar", VendedorController.buscarVendedores);
+
+
 export default router;
