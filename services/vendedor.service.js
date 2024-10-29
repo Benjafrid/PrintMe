@@ -83,6 +83,29 @@ const deletevendedor = async (id) => {
         return null;
     }
 };
+ 
+const buscarVendedores = async (termino) => {
+    const client = new Client(config);
+    await client.connect();
+
+    try {
+        const { rows } = await client.query(
+            'SELECT nombre, descripcion FROM vendedor WHERE nombre ILIKE $1 OR descripcion ILIKE $1',
+            [`%${termino}%`]
+        );
+        
+        console.log("Resultados encontrados:", rows); // Imprime los resultados
+
+        await client.end();
+        return rows;
+    } catch (error) {
+        console.error("Error en la consulta de búsqueda:", error); // Log de errores
+        await client.end();
+        throw error;
+    }
+};
+
+
 
 const vendedorServices = {
     getvendedor,
@@ -90,7 +113,8 @@ const vendedorServices = {
     updatevendedor,
     deletevendedor,
     getVendedoresByEmail,
-    createvendedor
+    createvendedor,
+    buscarVendedores
 };
 
 export default vendedorServices;

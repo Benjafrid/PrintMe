@@ -1,6 +1,7 @@
 import VendedorServices from "../services/vendedor.service.js";
 import { config } from "../dbconfig.js";
 import pkg from "pg";
+import vendedorServices from "../services/vendedor.service.js";
 const { Client } = pkg;
 
 const obtenervendedorID = async (req,res)=>{
@@ -40,36 +41,31 @@ const deletevendedor = async (req, res) => {
         res.status(500).json({message: error.message})
     }
 }
-const buscarVendedores = async (req, res) => {
-    const termino = req.query.q; //obtiene el valor del parámetro de consulta q que se envía en la URL de la solicitud, algo típico en las búsquedas
-    if (!termino) return res.status(400).json({ message: "El término de búsqueda es requerido" });
-
-    const client = new Client(config);
-    await client.connect();
+const buscarVendedor = async (req, res) => {
+    const termino = req.query.q; // Obtener el término de búsqueda desde la URL
+    
+    if (!termino) {
+        return res.status(400).json({ message: "Se requiere un término de búsqueda." });
+    }
 
     try {
-        const { rows } = await client.query(
-            `SELECT nombre, descripcion FROM vendedor WHERE nombre ILIKE $1 OR descripcion ILIKE $1`,
-            [`%${termino}%`] // ILIKE no distingue entre mayúsculas y minúsculas.
-        );
-
-        await client.end();
-
-        if (rows.length === 0) return res.json({ message: "No se encontraron resultados" });
-
-        res.json(rows);
+        const vendedores = await vendedorServices.buscarVendedores(termino);
+        if (vendedores.length === 0) {
+            return res.status(404).json({ message: "No se encontraron vendedores." });
+        }
+        res.json({message: vendedores});
     } catch (error) {
-        console.error("Error en la búsqueda:", error);
-        await client.end();
-        res.status(500).json({ message: "Error al realizar la búsqueda" });
+        console.error(error); // Registrar el error
+        res.status(500).json({ message: error.message });
     }
 };
+
 
 
 const VendedorController = {
     obtenervendedorID,
     updatevendedor,
     deletevendedor,
-    buscarVendedores
+    buscarVendedor
 }
 export default VendedorController;

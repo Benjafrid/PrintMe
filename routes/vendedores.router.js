@@ -5,6 +5,7 @@ import pedidosControllers from '../controllers/pedidos.controllers.js';
 
 const router = Router();
 
+router.get("/buscar", VendedorController.buscarVendedor);
 router.get("/vendedorByID/:id", verifyToken, VendedorController.obtenervendedorID)
 router.put("/updatevendedor/:id",verifyToken, VendedorController.updatevendedor)
 router.delete("/deletevendedor/:id",verifyToken, VendedorController.deletevendedor)
@@ -17,7 +18,6 @@ router.put("/comenzar/:id", verifyToken, verifyAdmin, pedidosControllers.comenza
 router.put("/entregar/:id",  verifyToken, verifyAdmin, pedidosControllers.entregarPedido);
 router.delete("/delete/:id", verifyToken, verifyAdmin, pedidosControllers.deletePedido);
 
-router.get("/buscar", VendedorController.buscarVendedores);
 
 
 export default router;

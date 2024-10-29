@@ -216,12 +216,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6M
 //BUSCADOR
 
 ###
-GET http://localhost:3000/buscar/buscar?q=benja HTTP/1.1
-Content-Type: application/json
-
-{
-
-}
-
+GET http://localhost:3000/vendedores/buscar?q=benji
 
 

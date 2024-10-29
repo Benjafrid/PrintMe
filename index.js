@@ -25,4 +25,3 @@ app.use("/registercomprador",authRouter);
 app.use("/registervendedor",authRouter);
 app.use("/productos", CompradorRouter)
 app.use("/pedidos", VendedorRouter);
-app.use("/buscar", VendedorRouter)
