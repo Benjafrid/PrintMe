@@ -91,7 +91,7 @@ const buscarVendedores = async (termino) => {
     try {
         const { rows } = await client.query(
             'SELECT nombre, descripcion FROM vendedor WHERE nombre ILIKE $1 OR descripcion ILIKE $1',
-            [`%${termino}%`]
+            [`%${termino}%`] // Utiliza ILIKE para búsqueda insensible a mayúsculas
         );
         
         console.log("Resultados encontrados:", rows); // Imprime los resultados
