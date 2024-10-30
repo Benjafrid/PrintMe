@@ -7,12 +7,23 @@ import cors from "cors"
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-    origin: "*", // origen permitido
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedheaders: ['Content-Type', 'Authorization'],    
-    credentials: true
-  }));
+const corsOptions = {
+  origin: ['http://print-me1.vercel.app', 'http://127.0.0.1:5500'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
+// Configuración de respuesta para solicitudes
+app.options('*', (_, res) => {
+  res.header("Access-Control-Allow-Origin", "http://print-me1.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.sendStatus(200);
+});
 
 
 app.listen(3000, () => {
