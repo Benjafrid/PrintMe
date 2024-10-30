@@ -49,22 +49,22 @@ const obtenervendedorID = async (id) => {
 };
 
 
-const updatevendedor = async (nombre, apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id, admin) => {
+const updatevendedor = async (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) => {
     const client = new Client(config);
     await client.connect();
    const result= await client.query(
-    'UPDATE vendedor SET nombre = $1, apellido = $2, descripcion = $3 email = $4, zona = $5, impresora_modelo = $6, impresora_materiales = $7, post_procesado = $8, contraseña = $9, admin = false WHERE id = $11 RETURNING*', 
-    [nombre, apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin, id]);
+    'UPDATE vendedor SET (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true)', 
+    [nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin]);
     if (result.rows.length > 0) {
         return result;
     } else {
         return null;
     }
 };
-const createvendedor = async (nombre, apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) => {
+const createvendedor = async (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) => {
     const client = new Client(config);
     await client.connect();
-    const createvend = await client.query('INSERT INTO vendedor (nombre, apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, true)', [nombre, apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
+    const createvend = await client.query('INSERT INTO vendedor (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true)', [nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
     if (createvend.rowCount > 0) {
         return createvend.rows[0];
     } else {
@@ -90,7 +90,7 @@ const buscarVendedores = async (termino) => {
 
     try {
         const { rows } = await client.query(
-            'SELECT nombre, descripcion FROM vendedor WHERE nombre ILIKE $1 OR descripcion ILIKE $1',
+            'SELECT nombre_apellido, descripcion FROM vendedor WHERE nombre_apellido ILIKE $1 OR descripcion ILIKE $1',
             [`%${termino}%`] // Utiliza ILIKE para búsqueda insensible a mayúsculas
         );
         

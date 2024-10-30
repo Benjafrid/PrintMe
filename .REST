@@ -1,21 +1,20 @@
 ###
 //COMPRADOR
 GET http://localhost:3000/compradores/compradorByID/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTczMDA2MTk3NiwiZXhwIjoxNzMwMDY1NTc2fQ.jRdTfuLbumcZIWB_wUHoFpy2h9wQG8Hi061H7MRt1wk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTczMDIyMTUxMiwiZXhwIjoxNzMwMjI1MTEyfQ.F61AnZ2YMhSft78wQzVV00eY07nwwTNgIcLizoZh0VQ
 Content-Type: application/json 
 ###
-DELETE  http://localhost:3000/compradores/deletecomprador/5 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTczMDA2MTk3NiwiZXhwIjoxNzMwMDY1NTc2fQ.jRdTfuLbumcZIWB_wUHoFpy2h9wQG8Hi061H7MRt1wk
+DELETE  http://localhost:3000/compradores/deletecomprador/6 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTczMDIyMTUxMiwiZXhwIjoxNzMwMjI1MTEyfQ.F61AnZ2YMhSft78wQzVV00eY07nwwTNgIcLizoZh0VQ
 Content-Type: application/json
 
 ###
 PUT http://localhost:3000/compradores/updatecomprador/10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTczMDA2MTk3NiwiZXhwIjoxNzMwMDY1NTc2fQ.jRdTfuLbumcZIWB_wUHoFpy2h9wQG8Hi061H7MRt1wk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTczMDIyMTUxMiwiZXhwIjoxNzMwMjI1MTEyfQ.F61AnZ2YMhSft78wQzVV00eY07nwwTNgIcLizoZh0VQ
 Content-Type: application/json
 
 {
-"nombre" : "juana",
-"apellido": "e",
+"nombre_apellido" : "juana perez",
 "mail":"jua@gmail.com",
 "contraseña":"124",
 "id": 10
@@ -23,34 +22,31 @@ Content-Type: application/json
 
 ###
 //VENDEDOR
-GET http://localhost:3000/vendedores/vendedorByID/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTczMDA2MjIyNywiZXhwIjoxNzMwMDY1ODI3fQ.BUwJCudeMOA_RAyzmM3O7ATAK2qDYyfm_4N8Fp06c_o
+GET http://localhost:3000/vendedores/vendedorByID/4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTczMDIyMTcyNywiZXhwIjoxNzMwMjI1MzI3fQ.Gt78dNrImiZy42pdywiVcf92rOzVXyn0UMBgJM7Gu0M
 Content-Type: application/json
 
 ###
-DELETE  http://localhost:3000/vendedores/deletevendedor/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTczMDA2MjIyNywiZXhwIjoxNzMwMDY1ODI3fQ.BUwJCudeMOA_RAyzmM3O7ATAK2qDYyfm_4N8Fp06c_o
+DELETE  http://localhost:3000/vendedores/deletevendedor/5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTczMDIyMTcyNywiZXhwIjoxNzMwMjI1MzI3fQ.Gt78dNrImiZy42pdywiVcf92rOzVXyn0UMBgJM7Gu0M
 Content-Type: application/json
 
 ###
-PUT http://localhost:3000/vendedores/updatevendedor/4 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTczMDA2MjIyNywiZXhwIjoxNzMwMDY1ODI3fQ.BUwJCudeMOA_RAyzmM3O7ATAK2qDYyfm_4N8Fp06c_o
+PUT http://localhost:3000/vendedores/updatevendedor/7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTczMDIyMTcyNywiZXhwIjoxNzMwMjI1MzI3fQ.Gt78dNrImiZy42pdywiVcf92rOzVXyn0UMBgJM7Gu0M
 Content-Type: application/json
 
 {
-"nombre": "felipe", 
-"apellido":"crespo", 
+"nombre_apellido": "juan crespo",
 "descripcion": "especialista en impresoras",
-"mail" : "felipecrespo@gmail.com", 
+"mail" : "feli@gmail.com", 
 "zona" : "maliar", 
 "impresora_modelo" : "Impresora5",
 "impresora_materiales": "filamento naraja", 
-"post_procesado" : false, 
+"post_procesado" : true, 
 "contraseña":"crespo123",
-"id":4,
 "admin": true
 }
-
 
 ###
 //LOGIN
@@ -59,8 +55,8 @@ POST http://localhost:3000/login/login HTTP/1.1
 Content-Type: application/json 
 
 {
-"mail": "benji@gmail.com", 
-"contraseña": "jua232"
+"mail": "pefre@gmail.com", 
+"contraseña": "pefre"
 }
 
 ###
@@ -69,10 +65,9 @@ POST http://localhost:3000/registercomprador/registercomp HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre": "juana", 
-"apellido": "peres", 
-"mail": "peres@gmail.com", 
-"contraseña": "peres"
+"nombre_apellido": "herno perez",
+"mail": "herno@gmail.com", 
+"contraseña": "herno"
 }
 
 ###
@@ -81,14 +76,13 @@ POST http://localhost:3000/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre": "benji", 
-"apellido": "he", 
-"mail": "benji@gmail.com", 
+"nombre_apellido": "benji pefre", 
+"mail": "pefre@gmail.com", 
 "zona": "delvoti", 
 "impresora_modelo": "impresora7", 
 "impresora_materiales": "filamento negri", 
 "post_procesado": false, 
-"contraseña": "jua232",
+"contraseña": "pefre",
 "admin":"admin",
 "descripcion": "especialista en impresoras 3D"
 }
@@ -216,6 +210,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6M
 //BUSCADOR
 
 ###
-GET http://localhost:3000/vendedores/buscar?q=benji
+GET http://localhost:3000/vendedores/buscar?q=juana
 
 

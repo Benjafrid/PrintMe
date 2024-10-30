@@ -5,8 +5,8 @@ import vendedorServices from "../services/vendedor.service.js";
 import CompradoresService from "../services/comprador.service.js";
 
 const registervendedor = async (req, res) => {
-    const { nombre, apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, descripcion } = req.body || {};
-    if (!nombre || !apellido || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || post_procesado || !descripcion) {
+    const { nombre_apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, descripcion } = req.body || {};
+    if (!nombre_apellido || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || post_procesado || !descripcion) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
 
@@ -17,7 +17,7 @@ const registervendedor = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await vendedorServices.createvendedor(nombre, apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, hashedPassword);
+        await vendedorServices.createvendedor(nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, hashedPassword);
         res.status(201).json({ message: "Vendedor creado con éxito" });
     } catch (error) {
         console.error('Error creating vendedor:', error);
@@ -27,8 +27,8 @@ const registervendedor = async (req, res) => {
 
 
 const registercomp = async (req, res) => {
-    const { nombre, apellido, mail, contraseña } = req.body || {};
-    if (!nombre || !apellido || !mail || !contraseña) {
+    const { nombre_apellido, mail, contraseña } = req.body || {};
+    if (!nombre_apellido || !mail || !contraseña) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
@@ -37,7 +37,7 @@ const registercomp = async (req, res) => {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await CompradoresService.createcomprador(nombre, apellido, mail, hashedPassword);
+        await CompradoresService.createcomprador(nombre_apellido, mail, hashedPassword);
         res.status(201).json({ message: "Comprador creado con éxito" });
     } catch (error) {
         console.error('Error creating comprador:', error);

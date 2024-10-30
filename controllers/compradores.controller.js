@@ -17,12 +17,12 @@ const obtenercompradoresID = async (req,res)=>{
 
 const updateComprador = async (req, res) => {
     try {
-        const {nombre, apellido, mail, contraseña, id} = req.body;
-        if (!nombre || !apellido || !mail || !contraseña || !id) {
+        const {nombre_apellido, mail, contraseña, id} = req.body;
+        if (!nombre_apellido || !mail || !contraseña || !id) {
             return res.status(400).json({ message: "Faltan campos requeridos" });
         }
         console.log(req.body)
-        const update = await CompradoresService.updatecomprador(nombre, apellido, mail, contraseña,id);
+        const update = await CompradoresService.updatecomprador(nombre_apellido, mail, contraseña,id);
         if (!update) return res.status(400).json({message: "no se pudo actualizar"});
         res.json({updated: update});
         

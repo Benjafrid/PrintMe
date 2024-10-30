@@ -8,7 +8,7 @@ const obtenervendedorID = async (req,res)=>{
     try {
         const {id} = req.params;
         const vendedor = await VendedorServices.obtenervendedorID(id);
-        if (!vendedor) return res.status(404).send("No se encontro comprador");
+        if (!vendedor) return res.status(404).send("No se encontro vendedor");
 
         res.json({vendedor: vendedor})
     } catch (error) {
@@ -18,11 +18,11 @@ const obtenervendedorID = async (req,res)=>{
 
 const updatevendedor = async (req, res) => {
     try {
-        const {nombre, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id, admin} = req.body;
-        if (!nombre || !descripcion || !mail || !contraseña || !id || !zona || !impresora_modelo || !impresora_materiales || !post_procesado || !admin) {
+        const {nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin} = req.body;
+        if (!nombre_apellido || !descripcion || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado || !admin) {
             return res.status(400).json({ message: "Faltan campos requeridos" });
         }
-        const update = await VendedorServices.updatevendedor(nombre, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, id, admin);
+        const update = await VendedorServices.updatevendedor(nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin);
         if (!update) return res.status(400).json({message: "no se pudo actualizar"});
         res.json({updated: update});
 

@@ -9,9 +9,10 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: "*", // origen permitido
-    methods: ['GET', 'POST', 'OPTIONS']
-  }));
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedheaders: ['Content-Type', 'Authorization']// Headers permitidos
 
+  }));
 
 
 app.listen(3000, () => {

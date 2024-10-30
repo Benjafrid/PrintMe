@@ -45,10 +45,10 @@ const obtenercompradorID = async (id) => {
     }
 }
 
-const createcomprador = async (nombre, apellido, mail, contraseña) => {
+const createcomprador = async (nombre_apellido, mail, contraseña) => {
     const client = new Client(config);
     await client.connect();
-    const createusu = await client.query('INSERT INTO comprador (nombre, apellido, mail, contraseña) VALUES ($1, $2, $3, $4) RETURNING * ', [nombre, apellido, mail, contraseña]);
+    const createusu = await client.query('INSERT INTO comprador (nombre_apellido, mail, contraseña) VALUES ($1, $2, $3) RETURNING * ', [nombre_apellido, mail, contraseña]);
     if (createusu.rows.lenght > 0){
       return createusu;
     } else{
@@ -56,12 +56,12 @@ const createcomprador = async (nombre, apellido, mail, contraseña) => {
     }
 };
 
-const updatecomprador = async (nombre, apellido, mail, contraseña, id) => {
+const updatecomprador = async (nombre_apellido, mail, contraseña, id) => {
     const client = new Client(config);
     await client.connect();
         const result = await client.query(
-        'UPDATE comprador SET nombre = $1, apellido = $2, mail = $3, contraseña = $4 WHERE id = $5 RETURNING *',
-        [nombre, apellido, mail, contraseña, id]
+        'UPDATE comprador SET nombre_apellido = $1, mail = $2, contraseña = $3 WHERE id = $4 RETURNING *',
+        [nombre_apellido, mail, contraseña, id]
     );
 
     console.log(result);
