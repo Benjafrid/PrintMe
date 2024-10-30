@@ -10,8 +10,8 @@ app.use(express.json());
 app.use(cors({
     origin: "*", // origen permitido
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedheaders: ['Content-Type', 'Authorization']// Headers permitidos
-
+    allowedheaders: ['Content-Type', 'Authorization'],    
+    credentials: true
   }));
 
 
