@@ -26,7 +26,7 @@ app.options('*', (_, res) => {
 });
 
 app.get("/", async(_,res) =>{
- res.send("HELLO WORD")
+ res.send("API WORKING")
 })
 
 
