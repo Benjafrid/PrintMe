@@ -8,7 +8,7 @@ import cors from "cors"
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: ['http://print-me1.vercel.app', 'http://127.0.0.1:5500'],
+  origin: ['*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -18,7 +18,7 @@ app.use(cors(corsOptions));
 
 // Configuración de respuesta para solicitudes
 app.options('*', (_, res) => {
-  res.header("Access-Control-Allow-Origin", "http://print-me1.vercel.app");
+  res.header("Access-Control-Allow-Origin", "http://print-me.vercel.app");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.header("Access-Control-Allow-Credentials", "true");
