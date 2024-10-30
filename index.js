@@ -18,10 +18,10 @@ app.use(cors(corsOptions));
 
 // Configuración de respuesta para solicitudes
 app.options('*', (_, res) => {
-  res.header("Access-Control-Allow-Origin", "http://print-me-ten.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-origin", "http://print-me-ten.vercel.app");
+  res.header("Access-Control-Allow-methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-credentials", "true");
   res.sendStatus(200);
 });
 
