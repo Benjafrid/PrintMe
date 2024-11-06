@@ -17,14 +17,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Configuración de respuesta para solicitudes de opciones
-app.options('*', (_, res) => {
-  res.header("Access-Control-Allow-Origin", 'https://127.0.0.1:5500');
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.sendStatus(200);
-});
+// Eliminacion de la configuración manual de app.options, ya que CORS debería manejar esto
+// app.options('*', (_, res) => {
+//   res.header("Access-Control-Allow-Origin",'https://127.0.0.1:5500');
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.sendStatus(200);
+// });
 
 
 app.get("/", async(_,res) =>{
