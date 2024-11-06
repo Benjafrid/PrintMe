@@ -1,10 +1,10 @@
 import 'dotenv/config';
 
 export const config = {
-    password : process.env.DB_PASSWORD,
-    user : process.env.DB_USER,
-    host : process.env.DB_HOST,
-    database : process.env.DB_DATABASE, 
-    port : process.env.DB_PORT,
+    password : 'qkBecwi2Fh9Q',
+    user : 'default',
+    host : 'ep-misty-leaf-a4j0udvq-pooler.us-east-1.aws.neon.tech',
+    database : 'verceldb', 
+    port : 5432,
     ssl : true
 };

@@ -51,7 +51,7 @@ Content-Type: application/json
 ###
 //LOGIN
 
-POST http://localhost:3000/login/login HTTP/1.1
+POST https://print-me-ten.vercel.app/login/login HTTP/1.1
 Content-Type: application/json 
 
 {
@@ -61,7 +61,7 @@ Content-Type: application/json
 
 ###
 //REGISTER COMPRADOR
-POST http://print-me-ten.vercel.app/registercomprador/registercomp HTTP/1.1
+POST https://print-me-ten.vercel.app/registercomprador/registercomp HTTP/1.1
 Content-Type: application/json
 
 {
