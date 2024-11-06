@@ -21,6 +21,10 @@ Content-Type: application/json
 }
 
 ###
+// test
+GET https://print-me-ten.vercel.app/pedidos/pedidos HTTP/1.1
+
+###
 //VENDEDOR
 GET http://localhost:3000/vendedores/vendedorByID/4 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTczMDIyMTcyNywiZXhwIjoxNzMwMjI1MzI3fQ.Gt78dNrImiZy42pdywiVcf92rOzVXyn0UMBgJM7Gu0M
@@ -66,13 +70,13 @@ Content-Type: application/json
 
 {
 "nombre_apellido": "pedro perez",
-"mail": "pedro12@gmail.com", 
-"contraseña": "pedro123"
+"mail": "ciro@gmail.com", 
+"contraseña": "ciro12"
 }
 
 ###
 //REGISTER VENDEDOR
-POST http://localhost:3000/registervendedor/registervend HTTP/1.1
+POST http://print-me-ten.vercel.app/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
