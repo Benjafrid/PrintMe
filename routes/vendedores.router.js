@@ -7,8 +7,10 @@ const router = Router();
 
 router.get("/buscar", VendedorController.buscarVendedor);
 router.get("/vendedorByID/:id", verifyToken, VendedorController.obtenervendedorID)
+router.get("/vendedor", VendedorController.getvendedores)
 router.put("/updatevendedor/:id",verifyToken, VendedorController.updatevendedor)
 router.delete("/deletevendedor/:id",verifyToken, VendedorController.deletevendedor)
+router.get("/vendedor", VendedorController.getvendedores)
 
 router.get("/pedidos", pedidosControllers.getPedidos);
 router.get("/:id", pedidosControllers.getPedidosByUser);

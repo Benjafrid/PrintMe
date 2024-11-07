@@ -21,18 +21,22 @@ const getCompradorByEmail = async (mail) => {
     }
 };
 
-const getAllcompradores = async (_, res) => {
+const getAllcompradores = async () => {
     const client = new Client(config); 
     await client.connect();
-    try {
-        const {rows, _} = await client.query("SELECT * FROM comprador")
 
-        res.status(200).json({compradores: rows, message: 'Obtenidos con exito'})
+    try {
+        const { rows } = await client.query("SELECT * FROM comprador");
+        console.log("Datos obtenidos:", rows); // Log para verificar los datos obtenidos
+        return rows;
     } catch (error) {
-        console.error('Error al obtener comprador:', error);
-        return res.status(500).json({ Error: 'Error al obtener comprador' });
+        console.error('Error al obtener compradores:', error);
+        throw new Error('Error al obtener compradores');
+    } finally {
+        await client.end();
     }
-}
+};
+
 const obtenercompradorID = async (id) => {
     const client = new Client(config);
     await client.connect();
@@ -47,14 +51,37 @@ const obtenercompradorID = async (id) => {
 
 const createcomprador = async (nombre_apellido, mail, contraseña) => {
     const client = new Client(config);
-    await client.connect();
-    const createusu = await client.query('INSERT INTO comprador (nombre_apellido, mail, contraseña) VALUES ($1, $2, $3) RETURNING * ', [nombre_apellido, mail, contraseña]);
-    if (createusu.rows.lenght > 0){
-      return createusu;
-    } else{
-        return null;
+    
+    try {
+        console.log("Intentando conectar a la base de datos...");
+        await client.connect();
+        console.log("Conectado a la base de datos");
+
+        // Insertar y devolver el registro si se crea exitosamente
+        const query = 'INSERT INTO comprador (nombre_apellido, mail, contraseña) VALUES ($1, $2, $3) RETURNING *';
+        const values = [nombre_apellido, mail, contraseña];
+
+        const createusu = await client.query(query, values);
+        if (createusu.rows.length > 0) {
+            console.log("Registro creado exitosamente:", createusu.rows[0]); // Confirmación del registro creado
+            return createusu.rows[0];
+        } else {
+            console.log("No se logró insertar el registro.");
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al crear comprador:', error.message);
+        throw new Error(`Error en la inserción: ${error.message}`);
+    } finally {
+        try {
+            await client.end(); // Cerrar la conexión
+            console.log("Conexión a la base de datos cerrada.");
+        } catch (closeError) {
+            console.error("Error al cerrar la conexión:", closeError.message);
+        }
     }
 };
+
 
 const updatecomprador = async (nombre_apellido, mail, contraseña, id) => {
     const client = new Client(config);

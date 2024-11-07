@@ -44,10 +44,27 @@ const deletecomprador = async (req, res) => {
     }
 }
 
+const getCompradores = async (req, res) => {
+    try {
+        const compradores = await CompradoresService.getAllcompradores();
+        
+        if (!compradores || compradores.length === 0) {
+            return res.status(404).json({ message: "No se encontraron compradores" });
+        }
+
+        console.log("Compradores obtenidos:", compradores);
+        res.status(200).json({ compradores, message: 'Obtenidos con éxito' });
+    } catch (error) {
+        console.error("Error en el controlador getCompradores:", error.message);
+        res.status(500).json({ message: "Error al obtener compradores", error: error.message });
+    }
+};
+
 const CompradoresController = {
     obtenercompradoresID,
     updateComprador,
-    deletecomprador
+    deletecomprador,
+    getCompradores
 }
 
 export default CompradoresController;

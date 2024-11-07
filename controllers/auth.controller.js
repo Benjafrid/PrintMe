@@ -27,23 +27,38 @@ const registervendedor = async (req, res) => {
 
 
 const registercomp = async (req, res) => {
-    const {mail, contraseña } = req.body || {};
-    if (!mail || !contraseña) {
+    
+    console.log("Request Body:", req.body); // Log para ver el contenido de req.body
+    const { nombre_apellido, mail, contraseña } = req.body || {};
+    
+    if (!nombre_apellido || !mail || !contraseña) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
+
     try {
+        console.log("Verificando si el comprador ya existe con el correo:", mail);
         const existingcomp = await CompradoresService.getCompradorByEmail(mail);
+        
         if (existingcomp) {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
+
+        console.log("Creando el comprador...");
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await CompradoresService.createcomprador(mail, hashedPassword);
-        res.status(201).json({ message: "Comprador creado con éxito" });
+        const newComp = await CompradoresService.createcomprador(nombre_apellido, mail, hashedPassword);
+
+        if (!newComp) {
+            return res.status(500).json({ message: "Error en la creación del comprador." });
+        }
+
+        console.log("Comprador creado con éxito:", newComp);
+        res.status(201).json({ message: "Comprador creado con éxito", data: newComp });
     } catch (error) {
-        console.error('Error creating comprador:', error);
-        res.status(500).json({ message: error.message });
+        console.error('Error en la creación del comprador:', error.message);
+        res.status(500).json({ message: "Error en el servidor", error: error.message });
     }
 };
+
 
 const login = async (req, res) => {
         const { mail, contraseña } = req.body;

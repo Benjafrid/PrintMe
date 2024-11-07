@@ -19,6 +19,8 @@ Content-Type: application/json
 "contraseña":"124",
 "id": 10
 }
+###
+GET https://print-me-ten.vercel.app/compradores/comprador/3 HTTP/1.1
 
 ###
 // test
@@ -65,23 +67,23 @@ Content-Type: application/json
 
 ###
 //REGISTER COMPRADOR
-POST https://print-me-ten.vercel.app/registercomprador/registercomp HTTP/1.1
+POST http://localhost:3000/registercomprador/registercomp HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre_apellido": "pedro perez",
-"mail": "juana@gmail.com", 
-"contraseña": "juanaasas"
+"nombre_apellido": "seetto",
+"mail": "seetto@gmail.com", 
+"contraseña": "seetto"
 }
 
 ###
 //REGISTER VENDEDOR
-POST http://print-me-ten.vercel.app/registervendedor/registervend HTTP/1.1
+POST https://print-me-ten.vercel.app/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
 "nombre_apellido": "benji pefre", 
-"mail": "pefre@gmail.com", 
+"mail": "p@gmail.com", 
 "zona": "delvoti", 
 "impresora_modelo": "impresora7", 
 "impresora_materiales": "filamento negri", 
