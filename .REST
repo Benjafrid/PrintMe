@@ -70,8 +70,8 @@ Content-Type: application/json
 
 {
 "nombre_apellido": "pedro perez",
-"mail": "ciro@gmail.com", 
-"contraseña": "ciro12"
+"mail": "juana@gmail.com", 
+"contraseña": "juanaasas"
 }
 
 ###

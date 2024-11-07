@@ -7,15 +7,10 @@ import cors from "cors"
 
 const app = express();
 app.use(express.json());
-
-const corsOptions = {
-  origin: 'https://127.0.0.1:5500', // Especifica la URL exacta
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: "*", // origen permitido
+  methods: ['GET', 'POST', 'DELETE', 'PUT' , 'OPTIONS']
+}));
 
 // Eliminacion de la configuración manual de app.options, ya que CORS debería manejar esto
 // app.options('*', (_, res) => {
