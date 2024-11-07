@@ -27,8 +27,8 @@ const registervendedor = async (req, res) => {
 
 
 const registercomp = async (req, res) => {
-    const { nombre_apellido, mail, contraseña } = req.body || {};
-    if (!nombre_apellido || !mail || !contraseña) {
+    const {mail, contraseña } = req.body || {};
+    if (!mail || !contraseña) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
     try {
@@ -37,7 +37,7 @@ const registercomp = async (req, res) => {
             return res.status(400).json({ message: "El comprador ya existe" });
         }
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await CompradoresService.createcomprador(nombre_apellido, mail, hashedPassword);
+        await CompradoresService.createcomprador(mail, hashedPassword);
         res.status(201).json({ message: "Comprador creado con éxito" });
     } catch (error) {
         console.error('Error creating comprador:', error);

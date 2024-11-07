@@ -18,7 +18,7 @@ app.use(cors({
 //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 //   res.header("Access-Control-Allow-Credentials", "true");
-//   res.sendStatus(200);
+//   res.sendStatus(200); 
 // });
 
 
