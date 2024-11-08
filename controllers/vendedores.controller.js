@@ -18,11 +18,11 @@ const obtenervendedorID = async (req,res)=>{
 
 const updatevendedor = async (req, res) => {
     try {
-        const {nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin} = req.body;
-        if (!nombre_apellido || !descripcion || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado || !admin) {
+        const {nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin, numero_telefonico} = req.body;
+        if (!nombre_apellido || !descripcion || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || !post_procesado || !admin|| !numero_telefonico) {
             return res.status(400).json({ message: "Faltan campos requeridos" });
         }
-        const update = await VendedorServices.updatevendedor(nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin);
+        const update = await VendedorServices.updatevendedor(nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin, numero_telefonico);
         if (!update) return res.status(400).json({message: "no se pudo actualizar"});
         res.json({updated: update});
 
@@ -60,17 +60,21 @@ const buscarVendedor = async (req, res) => {
     }
 };
 
-const getvendedores = async(req,res) => {
+const getvendedores = async(_,res) => {
     try {
-        const {id} = req.params;
-        const get = await vendedorServices.getvendedor(id);
-        console.log(get);
-        if (!get) return res.status(400).json({message: "no se pudo eliminar"});
+        const vendedor = await vendedorServices.getvendedor();
+        
+        if (!vendedor || vendedor.length === 0) {
+            return res.status(404).json({ message: "No se encontraron compradores" });
+        }
 
+        console.log("Compradores obtenidos:", vendedor);
+        res.status(200).json({ vendedor, message: 'Obtenidos con éxito' });
     } catch (error) {
-        res.status(500).json({message: error.message})
+        console.error("Error en el controlador getCompradores:", error.message);
+        res.status(500).json({ message: "Error al obtener compradores", error: error.message });
     }
-}
+};
 
 
 

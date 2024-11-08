@@ -1,7 +1,7 @@
 ###
 //COMPRADOR
 GET http://localhost:3000/compradores/compradorByID/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTczMDIyMTUxMiwiZXhwIjoxNzMwMjI1MTEyfQ.F61AnZ2YMhSft78wQzVV00eY07nwwTNgIcLizoZh0VQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDgsImlhdCI6MTczMTAwNDkyMCwiZXhwIjoxNzMxMDA4NTIwfQ.0dd6sMsjRehb2JJzhPIBdTGU9LjF-fweGLYOJbrA2mw
 Content-Type: application/json 
 ###
 DELETE  http://localhost:3000/compradores/deletecomprador/6 HTTP/1.1
@@ -19,8 +19,14 @@ Content-Type: application/json
 "contraseña":"124",
 "id": 10
 }
+
+//todos los datos de los compradores
 ###
-GET https://print-me-ten.vercel.app/compradores/comprador/3 HTTP/1.1
+GET https://print-me-ten.vercel.app/compradores/comprador/get HTTP/1.1
+
+//todos los datos de los vendedores
+###
+GET https://print-me-ten.vercel.app/vendedores/vendedor/get HTTP/1.1
 
 ###
 // test
@@ -51,29 +57,30 @@ Content-Type: application/json
 "impresora_materiales": "filamento naraja", 
 "post_procesado" : true, 
 "contraseña":"crespo123",
-"admin": true
+"admin": true,
+"numero_telefonico": "1123455678"
 }
 
 ###
 //LOGIN
 
-POST https://print-me-ten.vercel.app/login/login HTTP/1.1
+POST http://localhost:3000/login/login HTTP/1.1
 Content-Type: application/json 
 
 {
-"mail": "pefre@gmail.com", 
-"contraseña": "pefre"
+"mail": "res@gmail.com", 
+"contraseña": "benj"
 }
 
 ###
 //REGISTER COMPRADOR
-POST http://localhost:3000/registercomprador/registercomp HTTP/1.1
+POST http://print-me-ten.vercel.app/registercomprador/registercomp HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre_apellido": "seetto",
-"mail": "seetto@gmail.com", 
-"contraseña": "seetto"
+"nombre_apellido": "ben",
+"mail": "res@gmail.com", 
+"contraseña": "benj"
 }
 
 ###
@@ -82,15 +89,16 @@ POST https://print-me-ten.vercel.app/registervendedor/registervend HTTP/1.1
 Content-Type: application/json
 
 {
-"nombre_apellido": "benji pefre", 
-"mail": "p@gmail.com", 
+"nombre_apellido": "demi", 
+"mail": "de@gmail.com", 
 "zona": "delvoti", 
-"impresora_modelo": "impresora7", 
+"impresora_modelo": "impresora9", 
 "impresora_materiales": "filamento negri", 
 "post_procesado": false, 
 "contraseña": "pefre",
 "admin":"admin",
-"descripcion": "especialista en impresoras 3D"
+"descripcion": "especialista en impresoras 3D",
+"numero_telefonico": "1123456789"
 }
 
 //PEDIDOS

@@ -22,7 +22,7 @@ const getVendedoresByEmail = async (mail) => {
 };
 
 
-const getvendedor = async (_, res) => {
+const getvendedor = async () => {
     const client = new Client(config);
     await client.connect();
     try {
@@ -49,28 +49,48 @@ const obtenervendedorID = async (id) => {
 };
 
 
-const updatevendedor = async (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) => {
+const updatevendedor = async (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin, numero_telefonico) => {
     const client = new Client(config);
     await client.connect();
    const result= await client.query(
-    'UPDATE vendedor SET (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true)', 
-    [nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin]);
+    'UPDATE vendedor SET (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin, numero_telefonico) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, true)', 
+    [nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin, numero_telefonico]);
     if (result.rows.length > 0) {
         return result;
     } else {
         return null;
     }
 };
-const createvendedor = async (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña) => {
+const createvendedor = async (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, numero_telefonico) => {
     const client = new Client(config);
     await client.connect();
-    const createvend = await client.query('INSERT INTO vendedor (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, admin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true)', [nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña]);
-    if (createvend.rowCount > 0) {
-        return createvend.rows[0];
-    } else {
-        return null;
+
+    try {
+        const query = `
+            INSERT INTO vendedor (nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, numero_telefonico, admin)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, true) 
+            RETURNING *`;
+        
+        const values = [nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, numero_telefonico];
+        
+        // Realiza la inserción
+        const createvend = await client.query(query, values);
+
+        // Si la inserción tiene éxito, devuelve el registro creado
+        if (createvend.rowCount > 0) {
+            return createvend.rows[0];
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al crear vendedor:', error);
+        throw error;
+    } finally {
+        await client.end();
     }
 };
+
+
 
 const deletevendedor = async (id) => {
     const client = new Client(config);

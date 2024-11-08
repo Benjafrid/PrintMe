@@ -5,8 +5,8 @@ import vendedorServices from "../services/vendedor.service.js";
 import CompradoresService from "../services/comprador.service.js";
 
 const registervendedor = async (req, res) => {
-    const { nombre_apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, descripcion } = req.body || {};
-    if (!nombre_apellido || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || post_procesado || !descripcion) {
+    const { nombre_apellido, mail, zona, impresora_modelo, impresora_materiales, post_procesado, contraseña, descripcion, numero_telefonico } = req.body || {};
+    if (!nombre_apellido || !mail || !contraseña || !zona || !impresora_modelo || !impresora_materiales || post_procesado || !descripcion|| !numero_telefonico) {
         return res.status(400).json({ message: "Faltan campos por llenar" });
     }
 
@@ -17,7 +17,7 @@ const registervendedor = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await vendedorServices.createvendedor(nombre_apellido, descripcion, mail, zona, impresora_modelo, impresora_materiales, post_procesado, hashedPassword);
+        await vendedorServices.createvendedor(nombre_apellido, descripcion, numero_telefonico, mail, zona, impresora_modelo, impresora_materiales, post_procesado, hashedPassword);
         res.status(201).json({ message: "Vendedor creado con éxito" });
     } catch (error) {
         console.error('Error creating vendedor:', error);

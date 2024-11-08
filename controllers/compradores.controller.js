@@ -44,7 +44,7 @@ const deletecomprador = async (req, res) => {
     }
 }
 
-const getCompradores = async (req, res) => {
+const getCompradores = async (_, res) => {
     try {
         const compradores = await CompradoresService.getAllcompradores();
         

@@ -6,6 +6,7 @@ import pedidosControllers from '../controllers/pedidos.controllers.js';
 const router = Router();
 
 router.get("/buscar", VendedorController.buscarVendedor);
+router.get("/vendedor/get", VendedorController.getvendedores)
 router.get("/vendedorByID/:id", verifyToken, VendedorController.obtenervendedorID)
 router.get("/vendedor", VendedorController.getvendedores)
 router.put("/updatevendedor/:id",verifyToken, VendedorController.updatevendedor)

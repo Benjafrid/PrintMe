@@ -9,10 +9,10 @@ const router = Router();
 
 
 //COMPRADORES
+router.get("/comprador/get", CompradoresController.getCompradores);
 router.get("/compradorByID/:id", verifyToken, CompradoresController.obtenercompradoresID);
 router.put("/updatecomprador/:id",verifyToken, CompradoresController.updateComprador);
 router.delete("/deletecomprador/:id", verifyToken, CompradoresController.deletecomprador);
-router.get("/comprador/:id", CompradoresController.getCompradores);
 
 //PRODUCTOS
 router.get("/", productosControllers.getProductos);
